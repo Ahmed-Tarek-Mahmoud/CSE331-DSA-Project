@@ -92,6 +92,9 @@ public:
     void setRoot(TreeNode *node);
     TreeNode * getRoot();
     bool isEmpty();
+
+
+    void printTreePrettified(TreeNode* node, int depth = 0);
 };
 
 #endif
