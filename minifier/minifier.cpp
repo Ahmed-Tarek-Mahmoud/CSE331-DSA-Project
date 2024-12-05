@@ -13,7 +13,7 @@ void minifyXML(const char *inputFile, const char *outputFile)
     FILE *outFile = fopen(outputFile, "r");
     if (!outFile)
     {
-        char newOutputFile[BUFFER_SIZE];
+        char newOutputFile[MAX_FILE_NAME_SIZE];
         snprintf(newOutputFile, sizeof(newOutputFile), "%s", outputFile);
         outFile = fopen(newOutputFile, "w");
         if (!outFile)
@@ -37,11 +37,9 @@ void minifyXML(const char *inputFile, const char *outputFile)
     }
 
     char ch;
-    bool insideTag = false;   // True when inside `<...>`
-    bool insideData = false;  // True when inside meaningful data
-    bool dataStarted = false; // Tracks the beginning of meaningful data
-    char buffer[256];         // Temporary buffer to accumulate spaces
-    int bufferIndex = 0;
+    bool insideTag = false;        // True when inside `<...>`
+    bool insideData = false;       // True when inside meaningful data
+    bool lastCharWasSpace = false; // Tracks if the last character was a space
 
     while ((ch = fgetc(inFile)) != EOF)
     {
@@ -49,15 +47,14 @@ void minifyXML(const char *inputFile, const char *outputFile)
         {
             insideTag = true;
             insideData = false;
+            lastCharWasSpace = false; // Reset space tracking
 
-            // Flush any buffered spaces when entering a tag
-            bufferIndex = 0; // Clear buffer
             fputc(ch, outFile);
         }
         else if (ch == '>')
         {
             insideTag = false;
-            dataStarted = false; // End of a tag
+            lastCharWasSpace = false; // Reset space tracking
             fputc(ch, outFile);
         }
         else if (insideTag)
@@ -69,24 +66,19 @@ void minifyXML(const char *inputFile, const char *outputFile)
         {
             // If a non-space character is encountered, it starts meaningful data
             insideData = true;
-            dataStarted = true;
 
-            // Flush buffered spaces
-            for (int i = 0; i < bufferIndex; i++)
+            if (lastCharWasSpace)
             {
-                fputc(buffer[i], outFile);
+                fputc(' ', outFile); // Write a single space before data
             }
-            bufferIndex = 0; // Clear buffer
+            lastCharWasSpace = false; // Reset space tracking
 
             fputc(ch, outFile);
         }
         else if (insideData)
         {
-            // Accumulate spaces for meaningful data
-            if (bufferIndex < sizeof(buffer) - 1)
-            {
-                buffer[bufferIndex++] = ch;
-            }
+            // Only track a single space if meaningful data follows
+            lastCharWasSpace = true;
         }
     }
 

@@ -2,7 +2,7 @@
 
 #include "headers.h"
 
-#define BUFFER_SIZE 265 // max number of consecutive white spaces
+#define MAX_FILE_NAME_SIZE 265 // max chars to represent output file name
 
 /**
  * @brief Minifies an XML file by removing unnecessary whitespace and newlines outside of tags or data fields.
