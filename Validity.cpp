@@ -25,12 +25,10 @@ public:
 };
 
 vector<error> validityCheck_Correction(ifstream &file,ofstream &outfile) {
-
   outfile.clear();
   vector<error> errors;
   vector<string> correctOutput;
-  stack<string> openingTagStack;
-  stack<string> closingTagStack;
+  vector<string> openTagVector;
   string line;
   int lineNumber =0;
 
@@ -78,9 +76,12 @@ vector<error> validityCheck_Correction(ifstream &file,ofstream &outfile) {
 
     lineNumber++;
 
+    if (lineNumber == 36) {
+      cout<<"";
+    }
     if (openingTag.empty() && closingTag.empty() && !data.empty()) {
 
-     correctOutput.push_back(data);
+      correctOutput.push_back(data);
 
     }else if (!openingTag.empty() && !closingTag.empty()) {
 
@@ -91,6 +92,14 @@ vector<error> validityCheck_Correction(ifstream &file,ofstream &outfile) {
       }else {
         errors.push_back(error("INCORRECT_CLOSING_TAG_AT_LINE: " + to_string(lineNumber) + "FOR_TAG:" + openingTag));
         correctOutput.push_back("</"+openingTag+">");
+        if (closingTag[0] == '/') {
+          correctOutput.push_back("<"+closingTag.substr(1)+">");
+          correctOutput.push_back("<"+closingTag+">");
+
+        }else {
+          correctOutput.push_back("<"+closingTag+">");
+          correctOutput.push_back("</"+closingTag+">");
+        }
       }
 
     }else if (!openingTag.empty() && closingTag.empty() && !data.empty()) {
@@ -102,48 +111,69 @@ vector<error> validityCheck_Correction(ifstream &file,ofstream &outfile) {
 
     }else if (!openingTag.empty() && closingTag.empty() && data.empty()) {
 
-      if (!openingTagStack.empty() && openingTag  == openingTagStack.top()) {
+      bool found = false;
 
+      for (int i=0; i<openTagVector.size(); i++) {
+        if (openTagVector[i] == openingTag) {
+          found = true;
+          break;
+        }
+      }
+
+      if (found) {
         errors.push_back(error("MISSING_CLOSING_TAG_AT_LINE: " + to_string(lineNumber) + "FOR_TAG:" + openingTag));
+        while (openTagVector.back() != openingTag) {
+          correctOutput.push_back("</"+openTagVector.back()+">");
+          openTagVector.pop_back();
+        }
         correctOutput.push_back("</"+openingTag+">");
-
+        correctOutput.push_back("<"+openingTag+">");
       }else {
 
-        openingTagStack.push(openingTag);
+        openTagVector.push_back(openingTag);
+        correctOutput.push_back("<"+openingTag+">");
 
       }
-      correctOutput.push_back("<"+openingTag+">");
 
     }else if (openingTag.empty() && !closingTag.empty()) {
 
-      if (!openingTagStack.empty() && closingTag == "/"+openingTagStack.top()) {
-
+      if (!openTagVector.empty() && closingTag == "/"+openTagVector.back()) {
         correctOutput.push_back("<"+closingTag+">");
-        openingTagStack.pop();
+        openTagVector.pop_back();
 
       }else {
-        while (!openingTagStack.empty() && closingTag != "/"+openingTagStack.top()) {
-          errors.push_back(error("MISSING_CLOSING_TAG_AT_LINE: " + to_string(lineNumber) + "FOR_TAG:" + openingTagStack.top()));
-          correctOutput.push_back("</"+openingTagStack.top()+">");
-          openingTagStack.pop();
-
+        bool found = false;
+        for (int i=0; i<openTagVector.size(); i++) {
+          if (closingTag == "/"+openTagVector[i]) {
+            found = true;
+            break;
+          }
         }
-
-        correctOutput.push_back("<"+closingTag+">");
-        openingTagStack.pop();
-
+        if (found) {
+          while (closingTag != "/"+openTagVector.back()) {
+            errors.push_back(error("MISSING_CLOSING_TAG_AT_LINE: " + to_string(lineNumber) + "FOR_TAG:" + openTagVector.back()));
+            correctOutput.push_back("</"+openTagVector.back()+">");
+            openTagVector.pop_back();
+          }
+          correctOutput.push_back("<"+closingTag+">");
+          openTagVector.pop_back();
+        }else {
+          errors.push_back(error("INCORRECT_CLOSING_TAG_AT_LINE: " + to_string(lineNumber) + "FOR_TAG:" + openTagVector.back()));
+          correctOutput.push_back("<"+closingTag.substr(1)+">");
+          correctOutput.push_back("<"+closingTag+">");
+        }
       }
-
     }
-  }
 
-  if (outfile.is_open()) {
-    for (int i=0; i<correctOutput.size(); i++) {
-      outfile << correctOutput[i] << endl;
+  }
+    if (outfile.is_open()) {
+      for (int i=0; i<correctOutput.size(); i++) {
+        outfile << correctOutput[i] << endl;
+      }
     }
-  }
 
-  return errors;
+    return errors;
 }
+
 
 
