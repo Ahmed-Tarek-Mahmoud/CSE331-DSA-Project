@@ -76,7 +76,7 @@ vector<error> validityCheck_Correction(ifstream &file,ofstream &outfile) {
 
     lineNumber++;
 
-    if (lineNumber == 36) {
+    if (lineNumber == 6) {
       cout<<"";
     }
     if (openingTag.empty() && closingTag.empty() && !data.empty()) {
@@ -158,7 +158,7 @@ vector<error> validityCheck_Correction(ifstream &file,ofstream &outfile) {
           correctOutput.push_back("<"+closingTag+">");
           openTagVector.pop_back();
         }else {
-          errors.push_back(error("INCORRECT_CLOSING_TAG_AT_LINE: " + to_string(lineNumber) + "FOR_TAG:" + openTagVector.back()));
+          errors.push_back(error("MISSING_OPENING_TAG_AT_LINE: " + to_string(lineNumber) + "FOR_TAG:" + closingTag.substr(1)));
           correctOutput.push_back("<"+closingTag.substr(1)+">");
           correctOutput.push_back("<"+closingTag+">");
         }
@@ -174,6 +174,5 @@ vector<error> validityCheck_Correction(ifstream &file,ofstream &outfile) {
 
     return errors;
 }
-
 
 
