@@ -15,12 +15,16 @@
   }
 
 
-vector<error> validityCheck_Correction(string path) {
+vector<error> validityCheck_Correction(string path,vector<string> & correctOutput) {
 
   fstream file;
   file.open(path);
+  if (!file.is_open()) {
+    vector<error> v;
+    v.push_back(error(error::error("File Can't be opened or incorrect path is specified",0)));
+    return v;
+  }
 
-  vector<string> correctOutput; //Vector for storing correct output
   vector<string> openTagVector; //Vector for storing open tags
   vector<error> errors; //Vector for storing errors found in the file
 
@@ -179,34 +183,9 @@ vector<error> validityCheck_Correction(string path) {
 
   }
 
-  //closes the file to reopen in truncation mode
-  file.close();
-  //clears data inside file
-  file.open(path, std::ios::out | std::ios::trunc);
-  file.close();
-  //reopens the file for data rewrite
-  file.open(path);
-    if (file.is_open()) {
-      for (int i=0; i<correctOutput.size(); i++) {
-        file << correctOutput[i] << endl;
-      }
-    }
+  //close the file
+    file.close();
 
     return errors;
 }
 
-int main () {
-
-    vector<error> errors = validityCheck_Correction("D:/CSE-Senior1/DSA/CSE331-DSA-Project/input.txt.txt");
-
-    if (errors.empty()) {
-      cout << "No errors found" << endl;
-    }else {
-      while (errors.empty() == false) {
-        cout<<errors.back().print_error()<<endl;
-        errors.pop_back();
-      }
-    }
-
-    return 0;
-  }
