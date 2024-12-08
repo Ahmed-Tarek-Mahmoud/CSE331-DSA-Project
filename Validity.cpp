@@ -1,45 +1,47 @@
 
-#include "Tree.h"
-#include <iostream>
-#include <fstream>
+#include "Validity.h"
 
-using namespace std;
-
-class error {
-private:
-  string message;
-public:
-
-  error(string m) {
+  error::error(string m,int l) {
     message = m;
+    line = l;
   }
 
-  string print_error() {
+  string error:: print_error() {
     return "Error: " + message;
   }
 
-  string getMessage() const {
+  string error:: getMessage() const {
     return message;
   }
 
-};
 
-vector<error> validityCheck_Correction(ifstream &file,ofstream &outfile) {
-  outfile.clear();
-  vector<error> errors;
-  vector<string> correctOutput;
-  vector<string> openTagVector;
-  string line;
-  int lineNumber =0;
+vector<error> validityCheck_Correction(string path,vector<string> & correctOutput) {
 
+  fstream file;
+  file.open(path);
+  if (!file.is_open()) {
+    vector<error> v;
+    v.push_back(error(error::error("File Can't be opened or incorrect path is specified",0)));
+    return v;
+  }
+
+  vector<string> openTagVector; //Vector for storing open tags
+  vector<error> errors; //Vector for storing errors found in the file
+
+  string line; //String for storing line read by stream
+  int lineNumber = 0; //Holds the value for line currently being read
+
+  //Reads the file line by line
   while (getline(file, line)) {
     string openingTag,closingTag,data;
     int i=0;
 
+    //Skip blank spaces
     while (line[i] == 32 || line[i] == '\t' && i< line.length()) {
       i++;
     }
 
+    //Obtain opening tag
     if (line[i] == '<' && line[i+1] != '/') {
       for (; i<line.length(); i++) {
         if (line[i] == '<') {continue;}
@@ -52,6 +54,7 @@ vector<error> validityCheck_Correction(ifstream &file,ofstream &outfile) {
       }
     }
 
+    //Skip blank spaces
     while (line[i] != '<' && line[i] != '>' && i< line.length()) {
       data+=line[i];
       i++;
@@ -65,7 +68,8 @@ vector<error> validityCheck_Correction(ifstream &file,ofstream &outfile) {
           closingTag+=line[i];
         } else break;
       }
-    }else if (line[i] == '<' && line[i+1] != '/') { //check if closing tag is the same as opening tag (i.e. without '/')
+    //check if closing tag is the same as opening tag (i.e. without '/')
+    }else if (line[i] == '<' && line[i+1] != '/') {
       for (; i<line.length(); i++) {
         if (line[i] == '<') {continue;}
         if (line[i] != '>') {
@@ -74,45 +78,51 @@ vector<error> validityCheck_Correction(ifstream &file,ofstream &outfile) {
       }
     }
 
+    //Increment line number
     lineNumber++;
-
-    if (lineNumber == 6) {
-      cout<<"";
+    if (lineNumber==34) {
+      cout << "";
     }
+    // If data only is present
     if (openingTag.empty() && closingTag.empty() && !data.empty()) {
 
       correctOutput.push_back(data);
 
-    }else if (!openingTag.empty() && !closingTag.empty()) {
+    }else if (!openingTag.empty() && !closingTag.empty()) { //If both opening tag and closing tags are present
 
       correctOutput.push_back("<"+openingTag+">");
       if (!data.empty()) {correctOutput.push_back(data);}
+      //If closing tag matches then no errors
       if (closingTag == "/"+openingTag) {
         correctOutput.push_back("<"+closingTag+">");
+      //If closing tag doesn't match then close the current tag correctly
       }else {
-        errors.push_back(error("INCORRECT_CLOSING_TAG_AT_LINE: " + to_string(lineNumber) + "FOR_TAG:" + openingTag));
+        errors.push_back(error("INCORRECT_CLOSING_TAG_AT_LINE: " + to_string(lineNumber) + "FOR_TAG:" + openingTag,lineNumber));
         correctOutput.push_back("</"+openingTag+">");
+        //If closing tag starts with '/' then open and close tag correctly
         if (closingTag[0] == '/') {
           correctOutput.push_back("<"+closingTag.substr(1)+">");
           correctOutput.push_back("<"+closingTag+">");
-
+        //If closing tag doesn't start with '/' then open and close tag correctly
         }else {
           correctOutput.push_back("<"+closingTag+">");
           correctOutput.push_back("</"+closingTag+">");
         }
       }
 
+    //If only opening tag and data are present
     }else if (!openingTag.empty() && closingTag.empty() && !data.empty()) {
-
-      errors.push_back(error("MISSING_CLOSING_TAG_AT_LINE: " + to_string(lineNumber) + "FOR_TAG:" + openingTag));
+      //Then closing tag is missing and should be corrected
+      errors.push_back(error("MISSING_CLOSING_TAG_AT_LINE: " + to_string(lineNumber) + "FOR_TAG:" + openingTag,lineNumber));
       correctOutput.push_back("<"+openingTag+">");
       correctOutput.push_back(data);
       correctOutput.push_back("</"+openingTag+">");
 
+    //If only opening tag is present then -> Multi-Attributed tag
     }else if (!openingTag.empty() && closingTag.empty() && data.empty()) {
-
       bool found = false;
 
+      //Checks if the same opening tag is already present in the vector
       for (int i=0; i<openTagVector.size(); i++) {
         if (openTagVector[i] == openingTag) {
           found = true;
@@ -121,27 +131,31 @@ vector<error> validityCheck_Correction(ifstream &file,ofstream &outfile) {
       }
 
       if (found) {
-        errors.push_back(error("MISSING_CLOSING_TAG_AT_LINE: " + to_string(lineNumber) + "FOR_TAG:" + openingTag));
+        //If a similar opening tag already exists then the old tag should be closed before adding the new one -> Error
+        errors.push_back(error("MISSING_CLOSING_TAG_AT_LINE: " + to_string(lineNumber) + "FOR_TAG:" + openingTag,lineNumber));
+        //Keep closing all child tags till reaching the parent tag
         while (openTagVector.back() != openingTag) {
           correctOutput.push_back("</"+openTagVector.back()+">");
           openTagVector.pop_back();
         }
+        //Close the original tag and add the new tag to the output vector
         correctOutput.push_back("</"+openingTag+">");
         correctOutput.push_back("<"+openingTag+">");
       }else {
-
+        //If no similar tag exists then just add it to the vector
         openTagVector.push_back(openingTag);
         correctOutput.push_back("<"+openingTag+">");
 
       }
-
+    //If only closing tag is present
     }else if (openingTag.empty() && !closingTag.empty()) {
-
+      //If closing tag matches the expected tag to be closed then -> No Error
       if (!openTagVector.empty() && closingTag == "/"+openTagVector.back()) {
         correctOutput.push_back("<"+closingTag+">");
         openTagVector.pop_back();
-
+      //If it doesn't match then -> Error
       }else {
+        //Check if there truly exists an opening tag for this closing tag
         bool found = false;
         for (int i=0; i<openTagVector.size(); i++) {
           if (closingTag == "/"+openTagVector[i]) {
@@ -149,16 +163,18 @@ vector<error> validityCheck_Correction(ifstream &file,ofstream &outfile) {
             break;
           }
         }
+        //If there's an opening tag then all the tags between them haven't been closed -> Add errors and close the tags
         if (found) {
           while (closingTag != "/"+openTagVector.back()) {
-            errors.push_back(error("MISSING_CLOSING_TAG_AT_LINE: " + to_string(lineNumber) + "FOR_TAG:" + openTagVector.back()));
+            errors.push_back(error("MISSING_CLOSING_TAG_AT_LINE: " + to_string(lineNumber) + "FOR_TAG:" + openTagVector.back(),lineNumber));
             correctOutput.push_back("</"+openTagVector.back()+">");
             openTagVector.pop_back();
           }
           correctOutput.push_back("<"+closingTag+">");
           openTagVector.pop_back();
+        //If there doesn't exist an opening tag then this closing tag has no opening tag -> Add opening tag right before it
         }else {
-          errors.push_back(error("MISSING_OPENING_TAG_AT_LINE: " + to_string(lineNumber) + "FOR_TAG:" + closingTag.substr(1)));
+          errors.push_back(error("MISSING_OPENING_TAG_AT_LINE: " + to_string(lineNumber) + "FOR_TAG:" + closingTag.substr(1),lineNumber));
           correctOutput.push_back("<"+closingTag.substr(1)+">");
           correctOutput.push_back("<"+closingTag+">");
         }
@@ -166,13 +182,10 @@ vector<error> validityCheck_Correction(ifstream &file,ofstream &outfile) {
     }
 
   }
-    if (outfile.is_open()) {
-      for (int i=0; i<correctOutput.size(); i++) {
-        outfile << correctOutput[i] << endl;
-      }
-    }
+
+  //close the file
+    file.close();
 
     return errors;
 }
-
 
