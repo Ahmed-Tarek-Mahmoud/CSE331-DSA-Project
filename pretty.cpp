@@ -1,6 +1,6 @@
 #include "pretty.h"
 
-void prettifyprint(TreeNode* node, int depth = 0) {
+void prettifyprint(TreeNode* node, int depth) {
     if (!node) return;
 
     // Indent based on depth and print the tag name

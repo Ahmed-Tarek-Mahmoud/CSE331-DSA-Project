@@ -22,7 +22,7 @@ public:
 };
 
  /*Prototype for file validation and error correction function */
-vector<error> validityCheck_Correction(string path);
+vector<error> validityCheck_Correction(string path,vector<string> & correctOutput);
 
 
 #endif //VALIDITY_H

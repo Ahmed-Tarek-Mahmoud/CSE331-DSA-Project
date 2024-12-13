@@ -5,6 +5,6 @@
 
 // Prettifying The Tree
 
-void prettifyprint(TreeNode* node, int depth = 0);
+void prettifyprint(TreeNode* node, int depth);
 
 #endif

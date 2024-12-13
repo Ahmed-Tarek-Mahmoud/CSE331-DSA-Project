@@ -88,7 +88,9 @@ class Tree{
 private:
     TreeNode *root;
 public:
-    Tree();
+    Tree(){
+        root = nullptr;
+    }
     void setRoot(TreeNode *node);
     TreeNode * getRoot();
     bool isEmpty();

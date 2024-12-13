@@ -21,7 +21,7 @@ vector<error> validityCheck_Correction(string path,vector<string> & correctOutpu
   file.open(path);
   if (!file.is_open()) {
     vector<error> v;
-    v.push_back(error(error::error("File Can't be opened or incorrect path is specified",0)));
+    v.push_back(error(error("File Can't be opened or incorrect path is specified",0)));
     return v;
   }
 

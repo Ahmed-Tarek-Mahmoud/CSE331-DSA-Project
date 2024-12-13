@@ -1,8 +1,5 @@
 #include "Tree.h"
 
-Tree::Tree() {
-    root = nullptr;
-}
 
 TreeNode *Tree::getRoot() {
     return root;
