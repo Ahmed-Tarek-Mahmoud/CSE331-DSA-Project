@@ -1,0 +1,53 @@
+# ninja log v6
+40	751	7559591767492123	GUI-xml_autogen/timestamp	1ce6d430c757f781
+758	3360	7559591768289717	CMakeFiles/GUI-xml.dir/mainwindow.cpp.obj	71b4c95174ab3728
+40	751	7559591767492123	GUI-xml_autogen/mocs_compilation.cpp	1ce6d430c757f781
+40	751	7559591767492123	D:/Qt projects/GUI-xml/build/Desktop_Qt_6_8_0_llvm_mingw_64_bit-Debug/GUI-xml_autogen/mocs_compilation.cpp	1ce6d430c757f781
+40	751	7559591767492123	D:/Qt projects/GUI-xml/build/Desktop_Qt_6_8_0_llvm_mingw_64_bit-Debug/GUI-xml_autogen/timestamp	1ce6d430c757f781
+755	2859	7559591768279638	CMakeFiles/GUI-xml.dir/main.cpp.obj	578bfd359ba05cbd
+2700	2807	7559147394588177	GUI-xml.exe	94ec16d95fe7875d
+752	2860	7559591768248466	CMakeFiles/GUI-xml.dir/GUI-xml_autogen/mocs_compilation.cpp.obj	779ec87c42b2ff79
+25	191	7559592979598114	GUI-xml_autogen/timestamp	1ce6d430c757f781
+25	191	7559592979598114	GUI-xml_autogen/mocs_compilation.cpp	1ce6d430c757f781
+25	191	7559592979598114	D:/Qt projects/GUI-xml/build/Desktop_Qt_6_8_0_llvm_mingw_64_bit-Debug/GUI-xml_autogen/timestamp	1ce6d430c757f781
+25	191	7559592979598114	D:/Qt projects/GUI-xml/build/Desktop_Qt_6_8_0_llvm_mingw_64_bit-Debug/GUI-xml_autogen/mocs_compilation.cpp	1ce6d430c757f781
+196	1639	7559592981307145	CMakeFiles/GUI-xml.dir/external/Validity.cpp.obj	13222191eb8be87a
+192	3285	7559592981267041	CMakeFiles/GUI-xml.dir/mainwindow.cpp.obj	71b4c95174ab3728
+3285	3391	7559593012211296	GUI-xml.exe	4dde951ee9472b12
+23	635	7559594875867167	GUI-xml_autogen/timestamp	1ce6d430c757f781
+23	635	7559594875867167	GUI-xml_autogen/mocs_compilation.cpp	1ce6d430c757f781
+23	635	7559594875867167	D:/Qt projects/GUI-xml/build/Desktop_Qt_6_8_0_llvm_mingw_64_bit-Debug/GUI-xml_autogen/timestamp	1ce6d430c757f781
+23	635	7559594875867167	D:/Qt projects/GUI-xml/build/Desktop_Qt_6_8_0_llvm_mingw_64_bit-Debug/GUI-xml_autogen/mocs_compilation.cpp	1ce6d430c757f781
+639	2691	7559594876624091	CMakeFiles/GUI-xml.dir/main.cpp.obj	578bfd359ba05cbd
+636	2726	7559594876592880	CMakeFiles/GUI-xml.dir/GUI-xml_autogen/mocs_compilation.cpp.obj	779ec87c42b2ff79
+642	3237	7559594876650133	CMakeFiles/GUI-xml.dir/mainwindow.cpp.obj	71b4c95174ab3728
+24	638	7559595316723926	GUI-xml_autogen/timestamp	1ce6d430c757f781
+24	638	7559595316723926	GUI-xml_autogen/mocs_compilation.cpp	1ce6d430c757f781
+24	638	7559595316723926	D:/Qt projects/GUI-xml/build/Desktop_Qt_6_8_0_llvm_mingw_64_bit-Debug/GUI-xml_autogen/timestamp	1ce6d430c757f781
+24	638	7559595316723926	D:/Qt projects/GUI-xml/build/Desktop_Qt_6_8_0_llvm_mingw_64_bit-Debug/GUI-xml_autogen/mocs_compilation.cpp	1ce6d430c757f781
+638	2511	7559595317556097	CMakeFiles/GUI-xml.dir/GUI-xml_autogen/mocs_compilation.cpp.obj	779ec87c42b2ff79
+645	2545	7559595317556097	CMakeFiles/GUI-xml.dir/main.cpp.obj	578bfd359ba05cbd
+648	3092	7559595317556097	CMakeFiles/GUI-xml.dir/mainwindow.cpp.obj	71b4c95174ab3728
+3092	3184	7559595342028501	GUI-xml.exe	4dde951ee9472b12
+35	702	7559636038589913	GUI-xml_autogen/timestamp	1ce6d430c757f781
+35	702	7559636038589913	GUI-xml_autogen/mocs_compilation.cpp	1ce6d430c757f781
+35	702	7559636038589913	D:/Qt projects/GUI-xml/build/Desktop_Qt_6_8_0_llvm_mingw_64_bit-Debug/GUI-xml_autogen/timestamp	1ce6d430c757f781
+35	702	7559636038589913	D:/Qt projects/GUI-xml/build/Desktop_Qt_6_8_0_llvm_mingw_64_bit-Debug/GUI-xml_autogen/mocs_compilation.cpp	1ce6d430c757f781
+702	2928	7559636039315707	CMakeFiles/GUI-xml.dir/GUI-xml_autogen/mocs_compilation.cpp.obj	779ec87c42b2ff79
+721	2934	7559636039503573	CMakeFiles/GUI-xml.dir/main.cpp.obj	578bfd359ba05cbd
+725	3492	7559636039533670	CMakeFiles/GUI-xml.dir/mainwindow.cpp.obj	71b4c95174ab3728
+3492	3627	7559636067214367	GUI-xml.exe	4dde951ee9472b12
+26	163	7559637172250383	GUI-xml_autogen/timestamp	1ce6d430c757f781
+26	163	7559637172250383	GUI-xml_autogen/mocs_compilation.cpp	1ce6d430c757f781
+26	163	7559637172250383	D:/Qt projects/GUI-xml/build/Desktop_Qt_6_8_0_llvm_mingw_64_bit-Debug/GUI-xml_autogen/timestamp	1ce6d430c757f781
+26	163	7559637172250383	D:/Qt projects/GUI-xml/build/Desktop_Qt_6_8_0_llvm_mingw_64_bit-Debug/GUI-xml_autogen/mocs_compilation.cpp	1ce6d430c757f781
+164	2496	7559637173627072	CMakeFiles/GUI-xml.dir/mainwindow.cpp.obj	71b4c95174ab3728
+2496	2597	7559637196959277	GUI-xml.exe	4dde951ee9472b12
+27	660	7559675655180369	GUI-xml_autogen/timestamp	1ce6d430c757f781
+27	660	7559675655180369	GUI-xml_autogen/mocs_compilation.cpp	1ce6d430c757f781
+27	660	7559675655180369	D:/Qt projects/GUI-xml/build/Desktop_Qt_6_8_0_llvm_mingw_64_bit-Debug/GUI-xml_autogen/timestamp	1ce6d430c757f781
+27	660	7559675655180369	D:/Qt projects/GUI-xml/build/Desktop_Qt_6_8_0_llvm_mingw_64_bit-Debug/GUI-xml_autogen/mocs_compilation.cpp	1ce6d430c757f781
+661	2598	7559675655917805	CMakeFiles/GUI-xml.dir/GUI-xml_autogen/mocs_compilation.cpp.obj	779ec87c42b2ff79
+664	2662	7559675655949979	CMakeFiles/GUI-xml.dir/main.cpp.obj	578bfd359ba05cbd
+667	3211	7559675655980568	CMakeFiles/GUI-xml.dir/mainwindow.cpp.obj	71b4c95174ab3728
+3211	3312	7559675681420633	GUI-xml.exe	4dde951ee9472b12

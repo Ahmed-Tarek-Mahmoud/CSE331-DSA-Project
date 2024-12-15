@@ -1,0 +1,7 @@
+# ninja log v5
+14	1421	7553874739703399	CMakeFiles/CSE331_DSA_Project.dir/Tree.cpp.obj	d4dc688ebeba6e0a
+9	1479	7553874740310587	CMakeFiles/CSE331_DSA_Project.dir/pretty.cpp.obj	3f35fa0c013eff97
+3	1339	7553883302494958	CMakeFiles/CSE331_DSA_Project.dir/main.cpp.obj	1140703a8b4bbc35
+19	1792	7553855731496554	CMakeFiles/CSE331_DSA_Project.dir/TreeParse/treeparse.cpp.obj	c2187a6cde040e49
+1297	1403	7553876098375065	CSE331_DSA_Project.exe	edf2ed98fa0ab691
+20	1521	7553874740723255	CMakeFiles/CSE331_DSA_Project.dir/treeparse.cpp.obj	17ffeb46c17d610d
