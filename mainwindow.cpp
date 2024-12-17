@@ -6,6 +6,10 @@
 #include "ui_mainwindow.h"
 #include "QMessageBox"
 #include "external/Validity.h"
+#include "external/Tree.h"
+#include "external/treeparse.h"
+#include "external/pretty.h"
+#include "external/minifier.hpp"
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -20,6 +24,10 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+bool validXMLname(QString name){
+    return name.endsWith(".xml");
+}
+
 void MainWindow::on_pushButton_clicked()
 {
     filePath = QFileDialog::getOpenFileName(this, "Open Text File", "", "XML Files (*.xml);;All Files (*)");
@@ -30,7 +38,6 @@ void MainWindow::on_pushButton_clicked()
         if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
             QTextStream in(&file);
             ui->textEdit->setPlainText(in.readAll());
-            ui->textEdit->setReadOnly(true);
             file.close();
         } else {
             QMessageBox::warning(this, "Error", "Unable to open the file.");
@@ -55,6 +62,7 @@ void MainWindow::on_correctBtn_clicked()
     QString out;
     for(auto st : corrected) out += st , out+='\n';
     ui->correctedField->setText(out);
+    ui->correctedField->setReadOnly(true);
 }
 
 
@@ -63,6 +71,7 @@ void MainWindow::on_saveAsBtn_clicked()
     QString fileName = QFileDialog::getSaveFileName(this, "Save as");
     if (fileName.isEmpty())
         return;
+    if(!validXMLname(fileName)) fileName+=".xml";
     QFile file(fileName);
 
     if (!file.open(QFile::WriteOnly | QFile::Text)) {
@@ -88,7 +97,6 @@ void MainWindow::on_browseFormat_clicked()
         if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
             QTextStream in(&file);
             ui->beforeFormat->setPlainText(in.readAll());
-            ui->beforeFormat->setReadOnly(true);
             file.close();
         } else {
             QMessageBox::warning(this, "Error", "Unable to open the file.");
@@ -99,12 +107,47 @@ void MainWindow::on_browseFormat_clicked()
 
 void MainWindow::on_formatBtn_clicked()
 {
-    if(!filePath.isEmpty()){
-        fileStrPath = filePath.toStdString();
-        validityCheck_Correction(fileStrPath , corrected);
+    QString xml = ui->beforeFormat->toPlainText();
+    Tree mytree = parseTree(xml.toStdString());
+    FILE *fp = freopen("temp_format.xml" , "w", stdout);
+    QFile formatted("temp_format.xml");
 
-    }else {
-        QMessageBox::warning(this, "Error", "No input file.");
+
+    if (formatted.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        prettifyprint(mytree.getRoot() , 0);
+        QTextStream result(&formatted);
+        ui->afterFormat->setPlainText(result.readAll());
+        ui->afterFormat->setReadOnly(true);
+        fclose(fp);
+    } else {
+        QMessageBox::warning(this, "Error", "Unable to open the file.");
     }
+}
+
+
+void MainWindow::on_saveFormated_clicked()
+{
+    QString saveFile = QFileDialog::getSaveFileName(this, "Save as");
+    if (saveFile.isEmpty())
+        return;
+    if(!validXMLname(saveFile)) saveFile+=".xml";
+    QFile file(saveFile);
+
+    if (!file.open(QFile::WriteOnly | QFile::Text)) {
+        QMessageBox::warning(this, "Warning", "Cannot save file: " + file.errorString());
+        return;
+    }
+
+    setWindowTitle(saveFile);
+    QTextStream out(&file);
+    QString text = ui->afterFormat->toPlainText();
+    out << text;
+    file.close();
+}
+
+
+void MainWindow::on_minifyBtn_clicked()
+{
+
 }
 

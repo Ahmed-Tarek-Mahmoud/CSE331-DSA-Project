@@ -18,6 +18,10 @@ set(PROJECT_SOURCES
         mainwindow.h
         mainwindow.ui
         external/Validity.cpp
+        external/pretty.cpp
+        external/treeparse.cpp
+        external/Tree.cpp
+        external/minifier.cpp
 )
 
 # set(EXTERNAL_SOURCES
@@ -25,7 +29,12 @@ set(PROJECT_SOURCES
 # )
 
 set(EXTERNAL_HEADERS
+    external/headers.h
     external/Validity.h
+    external/pretty.h
+    external/treeparse.h
+    external/Tree.h
+    external/minifier.hpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

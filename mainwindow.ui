@@ -20,13 +20,19 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>781</width>
-      <height>521</height>
+      <x>0</x>
+      <y>0</y>
+      <width>831</width>
+      <height>571</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -36,7 +42,7 @@
      </sizepolicy>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="validateTab">
      <attribute name="title">
@@ -232,7 +238,17 @@
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_4">
          <item>
-          <widget class="QTextEdit" name="afterFormat"/>
+          <widget class="QTextEdit" name="afterFormat">
+           <property name="lineWrapMode">
+            <enum>QTextEdit::LineWrapMode::NoWrap</enum>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+           <property name="placeholderText">
+            <string>After Format</string>
+           </property>
+          </widget>
          </item>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_6">

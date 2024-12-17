@@ -6,40 +6,33 @@ void prettifyprint(TreeNode* node, int depth) {
     // Indent based on depth and print the tag name
     cout << string(depth * 4, ' ') << "<" << node->TagName;
 
+    // Print attributes
     if (!node->attributes.empty()) {
         for (attribute att : node->attributes) {
             cout << " " << att.Name << "=\"" << att.Value << "\"";
         }
-        cout << ">";
     }
-    else {
-        cout << ">";
-    }
+    cout << ">";
 
+    // Print the TagValue with proper formatting
     if (node->TagValue.length() > 25) {
+        cout << "\n" << string((depth) * 4, ' ') << node->TagValue;
         cout << "\n" << string(depth * 4, ' ');
-    }
-
-    if (!node->TagValue.empty()) {
+    } else if (!node->TagValue.empty()) {
         cout << node->TagValue;
-    }
-    else {
-        cout << "\n";
     }
 
     // Recursively print child nodes
-    for (TreeNode* child : node->children) {
-        prettifyprint(child, depth + 1);
+    if (!node->children.empty()) {
+        cout << "\n"; // Add a newline before printing children
+        for (TreeNode* child : node->children) {
+
+            prettifyprint(child, depth + 1);
+        }
+        cout<< string(depth * 4, ' '); // Align closing tag properly
+
     }
 
-    if (node->TagValue.length() > 25) {
-        cout << "\n" << string(depth * 4, ' ') << "</" << node->TagName << ">" << endl;
-    }
-    else if (!node->TagValue.empty()) {
-        cout << "</" << node->TagName << ">" << endl;
-    }
-    else {
-        cout << string(depth * 4, ' ') << "</" << node->TagName << ">" << endl;
-    }
-
+    // Print closing tag
+    cout << "</" << node->TagName << ">" << endl;
 }

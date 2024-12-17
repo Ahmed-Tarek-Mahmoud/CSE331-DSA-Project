@@ -10,8 +10,10 @@ TreeNode* parseNode(const string &s,int &i) {
             while(s[j]!='>') j++; // move till end of open tag
             currentNode->createNode(s.substr(i,j-i+1));
             i=j+1;
+            while(s[i] == ' ' || s[i] == '\n') i++; // tarek1
             while(s[j]!='<') j++; // move to get tag value
             j--;
+            while(j > i && s[j] == '\n') j--; // tarek2
             string temp=s.substr(i,j-i+1);
             currentNode->TagValue=temp; // to be edited lma tarek y5leh private
             while(s[j]!='<') j++;

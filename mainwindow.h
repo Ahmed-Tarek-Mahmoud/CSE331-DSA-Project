@@ -34,6 +34,8 @@ private slots:
 
     void on_formatBtn_clicked();
 
+    void on_saveFormated_clicked();
+
 private:
     Ui::MainWindow *ui;
     QString saveFile;
