@@ -1,25 +1,23 @@
 #include "minifier.hpp"
 
-void minifyXML(const char *inputFile, const char *outputFile)
+void minifyXMLFiles(const char *inputFile, const char *outputFile)
 {
-    FILE *inFile = fopen(inputFile, "r");
-    if (!inFile)
+    string minifiedXml = minifyXML(inputFile);
+
+    if (minifiedXml.empty())
     {
-        fprintf(stderr, "Error: Could not open input file: %s\n", inputFile);
-        return;
+        return; // input file is not found
     }
 
-    // Check if the output file exists, if not create one
     FILE *outFile = fopen(outputFile, "r");
     if (!outFile)
     {
-        char newOutputFile[MAX_FILE_NAME_SIZE];
+        char newOutputFile[265];
         snprintf(newOutputFile, sizeof(newOutputFile), "%s", outputFile);
         outFile = fopen(newOutputFile, "w");
         if (!outFile)
         {
             fprintf(stderr, "Error: Could not create output file: %s\n", newOutputFile);
-            fclose(inFile);
             return;
         }
         printf("Output file does not exist. Created file: %s\n", newOutputFile);
@@ -31,15 +29,34 @@ void minifyXML(const char *inputFile, const char *outputFile)
         if (!outFile)
         {
             fprintf(stderr, "Error: Could not open output file: %s\n", outputFile);
-            fclose(inFile);
+
             return;
         }
+    }
+
+    for (int i = 0; i < minifiedXml.length(); i++)
+    {
+        fputc(minifiedXml[i], outFile); // copy the minified string to output file
+    }
+
+    fclose(outFile);
+    printf("Minified XML has been written.\n");
+}
+
+string minifyXML(const char *inputFile)
+{
+    FILE *inFile = fopen(inputFile, "r");
+    if (!inFile)
+    {
+        fprintf(stderr, "Error: Could not open input file: %s\n", inputFile);
+        return "";
     }
 
     char ch;
     bool insideTag = false;        // True when inside `<...>`
     bool insideData = false;       // True when inside meaningful data
     bool lastCharWasSpace = false; // Tracks if the last character was a space
+    string minifiedXml;
 
     while ((ch = fgetc(inFile)) != EOF)
     {
@@ -49,18 +66,18 @@ void minifyXML(const char *inputFile, const char *outputFile)
             insideData = false;
             lastCharWasSpace = false; // Reset space tracking
 
-            fputc(ch, outFile);
+            minifiedXml += ch;
         }
         else if (ch == '>')
         {
             insideTag = false;
             lastCharWasSpace = false; // Reset space tracking
-            fputc(ch, outFile);
+            minifiedXml += ch;
         }
         else if (insideTag)
         {
             // Write characters directly if inside a tag
-            fputc(ch, outFile);
+            minifiedXml += ch;
         }
         else if (!isspace(ch))
         {
@@ -69,11 +86,11 @@ void minifyXML(const char *inputFile, const char *outputFile)
 
             if (lastCharWasSpace)
             {
-                fputc(' ', outFile); // Write a single space before data
+                minifiedXml += ' '; // Write a single space before data
             }
             lastCharWasSpace = false; // Reset space tracking
 
-            fputc(ch, outFile);
+            minifiedXml += ch;
         }
         else if (insideData)
         {
@@ -83,6 +100,5 @@ void minifyXML(const char *inputFile, const char *outputFile)
     }
 
     fclose(inFile);
-    fclose(outFile);
-    printf("Minified XML has been written.\n");
+    return minifiedXml;
 }
