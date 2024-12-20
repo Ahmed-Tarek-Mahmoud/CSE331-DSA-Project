@@ -21,11 +21,12 @@ vector<error> validityCheck_Correction(string path,vector<string> & correctOutpu
   file.open(path);
   if (!file.is_open()) {
     vector<error> v;
-    v.push_back(error(error::error("File Can't be opened or incorrect path is specified",0)));
+    v.push_back(error(error("File Can't be opened or incorrect path is specified",0)));
     return v;
   }
 
   vector<string> openTagVector; //Vector for storing open tags
+  vector<string> multipleTagsOnSameLine;
   vector<error> errors; //Vector for storing errors found in the file
 
   string line; //String for storing line read by stream
@@ -35,6 +36,19 @@ vector<error> validityCheck_Correction(string path,vector<string> & correctOutpu
   while (getline(file, line)) {
     string openingTag,closingTag,data;
     int i=0;
+
+    //Add any extra tags on previous line before moving on to current line
+    while(!multipleTagsOnSameLine.empty()) {
+      if (multipleTagsOnSameLine.back()[0] == '/') {
+        correctOutput.push_back("<" + multipleTagsOnSameLine.back().substr(1) + ">");
+        correctOutput.push_back("<" + multipleTagsOnSameLine.back()+ ">");
+        multipleTagsOnSameLine.pop_back();
+      }else {
+        correctOutput.push_back("<" + multipleTagsOnSameLine.back()+ ">");
+        correctOutput.push_back("</" + multipleTagsOnSameLine.back()+ ">");
+        multipleTagsOnSameLine.pop_back();
+      }
+    }
 
     //Skip blank spaces
     while (line[i] == 32 || line[i] == '\t' && i< line.length()) {
@@ -80,9 +94,6 @@ vector<error> validityCheck_Correction(string path,vector<string> & correctOutpu
 
     //Increment line number
     lineNumber++;
-    if (lineNumber==34) {
-      cout << "";
-    }
     // If data only is present
     if (openingTag.empty() && closingTag.empty() && !data.empty()) {
 
@@ -123,8 +134,8 @@ vector<error> validityCheck_Correction(string path,vector<string> & correctOutpu
       bool found = false;
 
       //Checks if the same opening tag is already present in the vector
-      for (int i=0; i<openTagVector.size(); i++) {
-        if (openTagVector[i] == openingTag) {
+      for (int j=0; j<openTagVector.size(); j++) {
+        if (openTagVector[j] == openingTag) {
           found = true;
           break;
         }
@@ -157,8 +168,8 @@ vector<error> validityCheck_Correction(string path,vector<string> & correctOutpu
       }else {
         //Check if there truly exists an opening tag for this closing tag
         bool found = false;
-        for (int i=0; i<openTagVector.size(); i++) {
-          if (closingTag == "/"+openTagVector[i]) {
+        for (int j=0; j<openTagVector.size(); j++) {
+          if (closingTag == "/"+openTagVector[j]) {
             found = true;
             break;
           }
@@ -181,11 +192,32 @@ vector<error> validityCheck_Correction(string path,vector<string> & correctOutpu
       }
     }
 
+    //Check if there are any extra tags on the same line
+    while(line.length() > i ) {
+      string extraTag;
+      if (line[i] == '<' && line[i] != '>') {
+        for (; i<line.length(); i++) {
+          if (line[i] == '<') {continue;}
+          if (line[i] != '>') {
+            extraTag+=line[i];
+          }else {
+            i++;
+            break;
+          }
+        }
+      }else {
+        i++;
+      }
+      if (!extraTag.empty()) {
+        multipleTagsOnSameLine.push_back(extraTag);
+      }
+    }
   }
 
   //close the file
     file.close();
 
+  //Return error vector for error output and GUI
     return errors;
 }
 
