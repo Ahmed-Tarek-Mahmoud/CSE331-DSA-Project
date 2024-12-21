@@ -18,7 +18,7 @@ public:
     error(string m,int l);
     string print_error() ;
     string getMessage() const;
-
+    int getLineNumber() const;
 };
 
  /*Prototype for file validation and error correction function */
