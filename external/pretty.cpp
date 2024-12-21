@@ -15,6 +15,7 @@ void prettifyprint(TreeNode* node, int depth) {
     cout << ">";
 
     // Print the TagValue with proper formatting
+    while(!node->TagValue.empty() && (node->TagValue.back()==' ' || node->TagValue.back()=='\n')) node->TagValue.pop_back();
     if (node->TagValue.length() > 25) {
         cout << "\n" << string((depth) * 4, ' ') << node->TagValue;
         cout << "\n" << string(depth * 4, ' ');

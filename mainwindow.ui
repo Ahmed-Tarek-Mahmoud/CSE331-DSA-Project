@@ -42,7 +42,7 @@
      </sizepolicy>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="validateTab">
      <attribute name="title">
@@ -309,7 +309,7 @@
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_5">
          <item>
-          <widget class="QTextEdit" name="textEdit_5"/>
+          <widget class="QTextEdit" name="xmlFormat"/>
          </item>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_8">
@@ -327,7 +327,7 @@
             </spacer>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_9">
+            <widget class="QPushButton" name="browseJSON">
              <property name="text">
               <string>Browse</string>
              </property>
@@ -347,7 +347,7 @@
             </spacer>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_10">
+            <widget class="QPushButton" name="convertJSON">
              <property name="text">
               <string>Convert To JSON</string>
              </property>
@@ -373,7 +373,7 @@
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_6">
          <item>
-          <widget class="QTextEdit" name="textEdit_6"/>
+          <widget class="QTextEdit" name="JSONFormat"/>
          </item>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_9">
@@ -391,7 +391,7 @@
             </spacer>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_12">
+            <widget class="QPushButton" name="JSONsave">
              <property name="text">
               <string>Save</string>
              </property>
@@ -573,7 +573,7 @@
      <x>0</x>
      <y>0</y>
      <width>829</width>
-     <height>25</height>
+     <height>18</height>
     </rect>
    </property>
   </widget>
