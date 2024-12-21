@@ -14,6 +14,10 @@
     return message;
   }
 
+  int error:: getLineNumber() const {
+    return line;
+  }
+
 
 vector<error> validityCheck_Correction(string path,vector<string> & correctOutput) {
 
