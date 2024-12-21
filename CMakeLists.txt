@@ -22,6 +22,7 @@ set(PROJECT_SOURCES
         external/treeparse.cpp
         external/Tree.cpp
         external/minifier.cpp
+        external/Convert.cpp
 )
 
 # set(EXTERNAL_SOURCES
@@ -35,6 +36,7 @@ set(EXTERNAL_HEADERS
     external/treeparse.h
     external/Tree.h
     external/minifier.hpp
+    external/Convert.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

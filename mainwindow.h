@@ -36,6 +36,14 @@ private slots:
 
     void on_saveFormated_clicked();
 
+    void on_convertJSON_clicked();
+
+    void on_browseJSON_clicked();
+
+    void on_JSONsave_clicked();
+
+    void on_minifyBtn_clicked();
+
 private:
     Ui::MainWindow *ui;
     QString saveFile;

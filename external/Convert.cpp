@@ -2,7 +2,7 @@
 string createIndent(int level) {
     string indent = "";
     for (int i = 0; i < level; ++i) {
-        indent += "\t";  // Use tab character for indentation
+        indent += "  ";  // Use tab character for indentation
     }
     return indent;
 }
@@ -16,7 +16,7 @@ string convertSiblings(TreeNode *node, int indentLevel) {
     } else {
         str += "{\n";
         for (int i = 0; i < node->children.size(); i++) {
-            str += indent + "\t";  // Add a tab for each child
+            str += indent + "  ";  // Add a tab for each child
             if (i != node->children.size() - 1)
                 str += convertToJSON(node->children[i], indentLevel + 1) + ",\n";
             else
@@ -31,12 +31,13 @@ string convertToJSON(TreeNode *node, int indentLevel) {
     string indent = createIndent(indentLevel);
 
     if (node->children.size() == 0) {
+        while(!node->TagValue.empty() && (node->TagValue.back()==' ' || node->TagValue.back()=='\n')) node->TagValue.pop_back();
         str += "\"" + node->TagName + "\": \"" + node->TagValue + "\"";
     } else {
         if (node->children.size() == 1 || node->children[0]->TagName != node->children[1]->TagName) {
             str += "\"" + node->TagName + "\": {\n";
             for (int i = 0; i < node->children.size(); i++) {
-                str += indent + "\t";  // Add tab for each child
+                str += indent + "  ";  // Add tab for each child
                 if (i != node->children.size() - 1)
                     str += convertToJSON(node->children[i], indentLevel + 1) + ",\n";
                 else
@@ -46,7 +47,7 @@ string convertToJSON(TreeNode *node, int indentLevel) {
         } else {
             str += "\"" + node->TagName + "\": [\n";
             for (int i = 0; i < node->children.size(); i++) {
-                str += indent + "\t";  // Add tab for each sibling
+                str += indent + "  ";  // Add tab for each sibling
                 if (i != node->children.size() - 1)
                     str += convertSiblings(node->children[i], indentLevel + 1) + ",\n";
                 else
@@ -58,9 +59,9 @@ string convertToJSON(TreeNode *node, int indentLevel) {
     return str;
 }
 
-string treeToJson(Tree *tree) {
-    if (!tree || tree->isEmpty()) return "{}";
-    return "{\n\t" + convertToJSON(tree->getRoot(), 1) + "\n}";  // Start indentation at level 1
+string treeToJson(Tree tree) {
+    if (tree.isEmpty()) return "{}";
+    return "{\n  " + convertToJSON(tree.getRoot(), 1) + "\n}";  // Start indentation at level 1
 }
 
 

@@ -6,7 +6,7 @@
 //converts xml tree to json
 string convertToJSON(TreeNode *node, int indentLevel);
 
-string treeToJson(Tree *tree); 
+string treeToJson(Tree tree);
 
 string convertSiblings(TreeNode *node, int indentLevel);
 
