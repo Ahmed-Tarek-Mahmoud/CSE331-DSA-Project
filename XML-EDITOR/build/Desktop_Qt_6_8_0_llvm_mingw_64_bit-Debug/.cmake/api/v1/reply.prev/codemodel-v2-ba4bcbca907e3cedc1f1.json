@@ -1,0 +1,79 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-13fcf5feb3033a80a7b2.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "XML-EDITOR",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "XML-EDITOR::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-XML-EDITOR-Debug-d7d8ec9cbe3ffe628eed.json",
+					"name" : "XML-EDITOR",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "XML-EDITOR_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-XML-EDITOR_autogen-Debug-71a74f62dfb48239bbda.json",
+					"name" : "XML-EDITOR_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "XML-EDITOR_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-XML-EDITOR_autogen_timestamp_deps-Debug-9b7fb74cd61bfd91e7f5.json",
+					"name" : "XML-EDITOR_autogen_timestamp_deps",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "D:/Senior 1 CSE/DS/Project/CSE331-DSA-Project/GUI2/XML-EDITOR/build/Desktop_Qt_6_8_0_llvm_mingw_64_bit-Debug",
+		"source" : "D:/Senior 1 CSE/DS/Project/CSE331-DSA-Project/GUI2/XML-EDITOR"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}

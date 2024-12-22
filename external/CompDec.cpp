@@ -5,7 +5,7 @@
 #include <stdexcept>
 
 // Read a file and return its content as a string
-string CompDec::read_file(string& file_path) {
+string CompDec::read_file(const string& file_path) {
     ifstream file(file_path);
     if (!file.is_open()) throw runtime_error("Could not open file.");
     stringstream buffer;
@@ -18,27 +18,6 @@ void CompDec::write_file(const string& file_path, const string& content) {
     ofstream file(file_path);
     if (!file.is_open()) throw runtime_error("Could not open file.");
     file << content;
-}
-
-// Write compressed data to a binary file
-void CompDec::write_binary_file(const string& file_path, const vector<int>& data) {
-    ofstream file(file_path, ios::binary);
-    if (!file.is_open()) throw runtime_error("Could not open binary file.");
-    for (int code : data) {
-        file.write(reinterpret_cast<const char*>(&code), sizeof(int));
-    }
-}
-
-// Read compressed data from a binary file
-vector<int> CompDec::read_binary_file(const string& file_path) {
-    ifstream file(file_path, ios::binary);
-    if (!file.is_open()) throw runtime_error("Could not open binary file.");
-    vector<int> data;
-    int code;
-    while (file.read(reinterpret_cast<char*>(&code), sizeof(int))) {
-        data.push_back(code);
-    }
-    return data;
 }
 
 // LZW Compression
@@ -67,6 +46,26 @@ vector<int> CompDec::compress(const string& input) {
         result.push_back(dictionary[current]);
     }
     return result;
+}
+
+// Convert compressed data to string
+string CompDec::compressed_data_to_string(const vector<int>& compressed_data) {
+    stringstream ss;
+    for (int code : compressed_data) {
+        ss << code << " ";
+    }
+    return ss.str();
+}
+
+// Convert string to compressed data
+vector<int> CompDec::string_to_compressed_data(const string& data_str) {
+    stringstream ss(data_str);
+    vector<int> compressed_data;
+    int code;
+    while (ss >> code) {
+        compressed_data.push_back(code);
+    }
+    return compressed_data;
 }
 
 // LZW Decompression

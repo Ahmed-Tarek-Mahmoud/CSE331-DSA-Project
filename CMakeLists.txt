@@ -1,90 +1,20 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.10)
+project(CSE331_DSA_Project)
 
-project(GUI-xml VERSION 0.1 LANGUAGES CXX)
+# Option to choose the build type: GUI or CLI
+option(BUILD_GUI "Build the GUI version" ON)
+option(BUILD_CLI "Build the CLI version" OFF)
 
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
-
-set(PROJECT_SOURCES
-        main.cpp
-        mainwindow.cpp
-        mainwindow.h
-        mainwindow.ui
-        external/Validity.cpp
-        external/pretty.cpp
-        external/treeparse.cpp
-        external/Tree.cpp
-        external/minifier.cpp
-        external/Convert.cpp
+# Add common source files
+set(COMMON_SOURCES
+    
 )
 
-# set(EXTERNAL_SOURCES
-
-# )
-
-set(EXTERNAL_HEADERS
-    external/headers.h
-    external/Validity.h
-    external/pretty.h
-    external/treeparse.h
-    external/Tree.h
-    external/minifier.hpp
-    external/Convert.h
-)
-
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(GUI-xml
-        MANUAL_FINALIZATION
-        ${PROJECT_SOURCES}
-    )
-# Define target properties for Android with Qt 6 as:
-#    set_property(TARGET GUI-xml APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
-#                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
-# For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
-else()
-    if(ANDROID)
-        add_library(GUI-xml SHARED
-            ${PROJECT_SOURCES}
-        )
-# Define properties for Android with Qt 5 after find_package() calls as:
-#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
-    else()
-        add_executable(GUI-xml
-            ${PROJECT_SOURCES}
-        )
-    endif()
+# Add subdirectories for GUI and CLI builds
+if (BUILD_GUI)
+    add_subdirectory(gui)
 endif()
 
-target_link_libraries(GUI-xml PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
-
-# Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
-# If you are developing for iOS or macOS you should consider setting an
-# explicit, fixed bundle identifier manually though.
-if(${QT_VERSION} VERSION_LESS 6.1.0)
-  set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.GUI-xml)
-endif()
-set_target_properties(GUI-xml PROPERTIES
-    ${BUNDLE_ID_OPTION}
-    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-    MACOSX_BUNDLE TRUE
-    WIN32_EXECUTABLE TRUE
-)
-
-include(GNUInstallDirs)
-install(TARGETS GUI-xml
-    BUNDLE DESTINATION .
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-)
-
-if(QT_VERSION_MAJOR EQUAL 6)
-    qt_finalize_executable(GUI-xml)
+if (BUILD_CLI)
+    add_subdirectory(cli)
 endif()

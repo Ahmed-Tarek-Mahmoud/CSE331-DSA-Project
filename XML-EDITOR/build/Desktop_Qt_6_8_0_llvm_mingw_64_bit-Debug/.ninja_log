@@ -1,0 +1,15 @@
+# ninja log v6
+3	641	7566047911296327	XML-EDITOR_autogen/timestamp	27083ee83fe2572f
+3	641	7566047911296327	XML-EDITOR_autogen/mocs_compilation.cpp	27083ee83fe2572f
+3	641	7566047911296327	D:/Senior 1 CSE/DS/Project/CSE331-DSA-Project/GUI2/XML-EDITOR/build/Desktop_Qt_6_8_0_llvm_mingw_64_bit-Debug/XML-EDITOR_autogen/timestamp	27083ee83fe2572f
+3	641	7566047911296327	D:/Senior 1 CSE/DS/Project/CSE331-DSA-Project/GUI2/XML-EDITOR/build/Desktop_Qt_6_8_0_llvm_mingw_64_bit-Debug/XML-EDITOR_autogen/mocs_compilation.cpp	27083ee83fe2572f
+671	1601	7566047912368243	CMakeFiles/XML-EDITOR.dir/D_/Senior_1_CSE/DS/Project/CSE331-DSA-Project/external/minifier.cpp.obj	52e01cdbcba8d625
+667	1621	7566047912335139	CMakeFiles/XML-EDITOR.dir/D_/Senior_1_CSE/DS/Project/CSE331-DSA-Project/external/Tree.cpp.obj	6e0e4e98b1ebe631
+660	1637	7566047912258693	CMakeFiles/XML-EDITOR.dir/D_/Senior_1_CSE/DS/Project/CSE331-DSA-Project/external/pretty.cpp.obj	1b570ea05ddff4ea
+664	1661	7566047912290406	CMakeFiles/XML-EDITOR.dir/D_/Senior_1_CSE/DS/Project/CSE331-DSA-Project/external/treeparse.cpp.obj	b82d53f31f88f63e
+675	1711	7566047912408453	CMakeFiles/XML-EDITOR.dir/D_/Senior_1_CSE/DS/Project/CSE331-DSA-Project/external/Convert.cpp.obj	faacbcc1a86f8d87
+657	1859	7566047912232433	CMakeFiles/XML-EDITOR.dir/D_/Senior_1_CSE/DS/Project/CSE331-DSA-Project/external/Validity.cpp.obj	74f8465c88f57717
+648	2686	7566047912143101	CMakeFiles/XML-EDITOR.dir/XML-EDITOR_autogen/mocs_compilation.cpp.obj	5f089ee07ed75c83
+651	2784	7566047912174796	CMakeFiles/XML-EDITOR.dir/main.cpp.obj	7073d8ba79a218f9
+654	3268	7566047912201974	CMakeFiles/XML-EDITOR.dir/mainwindow.cpp.obj	4f4b5318469bf37e
+3268	3384	7566047938341174	XML-EDITOR.exe	6c57ce0643b75c7d
