@@ -44,6 +44,10 @@ private slots:
 
     void on_minifyBtn_clicked();
 
+    void on_toolButton_clicked();
+
+    void on_tabWidget_tabBarClicked(int index);
+
 private:
     Ui::MainWindow *ui;
     QString saveFile;

@@ -11,12 +11,13 @@
 #include "../external/pretty.h"
 #include "../external/minifier.hpp"
 #include "../external/Convert.h"
-
+#include "LevelTwo.h"
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
 }
 
 MainWindow::~MainWindow()
@@ -31,6 +32,9 @@ bool validXMLname(QString name){
 bool validJSONname(QString name){
     return name.endsWith(".json");
 }
+
+
+
 
 void MainWindow::on_pushButton_clicked()
 {
@@ -208,5 +212,24 @@ void MainWindow::on_minifyBtn_clicked()
     QString ans = QString::fromStdString(minifyXML(file_s));
     ui->afterFormat->setPlainText(ans);
     ui->afterFormat->setReadOnly(true);
+}
+
+
+void MainWindow::on_toolButton_clicked()
+{
+
+    LevelTwo *l = new LevelTwo();
+    l->show();
+    this->close();
+}
+
+
+void MainWindow::on_tabWidget_tabBarClicked(int index)
+{
+    if(index==4){
+        LevelTwo *l = new LevelTwo();
+        l->show();
+        this->close();
+    }
 }
 
