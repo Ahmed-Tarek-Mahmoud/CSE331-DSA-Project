@@ -5,6 +5,7 @@
 #include "QTextCursor"
 #include "ui_mainwindow.h"
 #include "QMessageBox"
+#include "QTextBlock"
 #include "../external/Validity.h"
 #include "../external/Tree.h"
 #include "../external/treeparse.h"
@@ -53,25 +54,73 @@ void MainWindow::on_pushButton_clicked()
     }
 }
 
-
-// @adnan add here highlighting errors then delete this comment
 void MainWindow::on_validateBtn_clicked()
 {
-    if(!filePath.isEmpty()){
+    vector<error> errors;
+    if (!filePath.isEmpty()) {
         fileStrPath = filePath.toStdString();
-        validityCheck_Correction(fileStrPath , corrected);
-    }else {
+        errors = validityCheck_Correction(fileStrPath, corrected);
+    } else {
         QMessageBox::warning(this, "Error", "No input file.");
+        return;
     }
+
+
+    QTextDocument *document = ui->textEdit->document();
+    QTextCursor cursor(document);
+    cursor.movePosition(QTextCursor::Start);
+
+    // Select the entire line
+    cursor.select(QTextCursor::LineUnderCursor);
+
+    // Create a text format with a background color
+    QTextCharFormat fmt;
+
+    // Highlight with red color
+    fmt.setBackground(QColor("red"));
+
+    for (int i = 0; i < errors.size(); i++) {
+        QTextBlock block = document->findBlockByNumber(errors[i].getLineNumber() - 1);  // 0-based index
+        cursor.setPosition(block.position());
+        cursor.movePosition(QTextCursor::Down, QTextCursor::KeepAnchor);
+        ui->textEdit->setTextCursor(cursor);
+        // Apply the format to the selected text
+        cursor.setCharFormat(fmt);
+    }
+
+    if (!errors.empty()) {
+        // Create a QString to hold all error messages
+        QString errorMessages;
+        for (int i = 0; i < errors.size(); i++) {
+            errorMessages += errors[i].getMessage()+"\n";
+        }
+
+        // Show the QMessageBox with the error messages
+        QMessageBox::warning(this, "Errors", errorMessages);
+    }
+    return;
 }
+
 
 void MainWindow::on_correctBtn_clicked()
 {
-    QString out;
+    string out;
     for(auto st : corrected) out += st , out+='\n';
-    ui->correctedField->setText(out);
-    ui->correctedField->setReadOnly(true);
+    Tree mytree = parseTree(out);
+    FILE *fp = freopen("temp_format.xml" , "w", stdout);
+    QFile formatted("temp_format.xml");
+
+    if (formatted.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        prettifyprint(mytree.getRoot() , 0);
+        QTextStream result(&formatted);
+        ui->correctedField->setPlainText(result.readAll());
+        ui->correctedField->setReadOnly(true);
+        fclose(fp);
+    } else {
+        QMessageBox::warning(this, "Error", "Unable to open the file.");
+    }
 }
+
 
 
 void MainWindow::on_saveAsBtn_clicked()
