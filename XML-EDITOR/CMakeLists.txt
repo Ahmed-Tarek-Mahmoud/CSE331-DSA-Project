@@ -23,6 +23,7 @@ set(PROJECT_SOURCES
         ../external/Tree.cpp
         ../external/minifier.cpp
         ../external/Convert.cpp
+        ../external/CompDec.cpp
 )
 
 # set(EXTERNAL_SOURCES
@@ -37,6 +38,7 @@ set(EXTERNAL_HEADERS
     ../external/Tree.h
     ../external/minifier.hpp
     ../external/Convert.h
+    ../external/CompDec.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

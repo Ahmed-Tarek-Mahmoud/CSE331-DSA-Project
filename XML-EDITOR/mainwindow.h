@@ -48,12 +48,24 @@ private slots:
 
     void on_tabWidget_tabBarClicked(int index);
 
+    void on_saveDecompressBtn_clicked();
+
+    void on_decompressBtn_clicked();
+
+    void on_saveCompressedBtn_clicked();
+
+    void on_cmpBtn_clicked();
+
+    void on_cmpBrowseBtn_clicked();
+
 private:
     Ui::MainWindow *ui;
     QString saveFile;
     QString filePath;  // Qstring version of the path
     string fileStrPath; // string version of the path
     vector<string> corrected; // corrected output of validate function
+    string decompressedData;
+    string compressedData;
 
 };
 #endif // MAINWINDOW_H

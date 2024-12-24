@@ -12,6 +12,7 @@
 #include "../external/pretty.h"
 #include "../external/minifier.hpp"
 #include "../external/Convert.h"
+#include "../external/CompDec.h"
 #include "LevelTwo.h"
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -281,4 +282,89 @@ void MainWindow::on_tabWidget_tabBarClicked(int index)
         this->close();
     }
 }
+
+void MainWindow::on_cmpBrowseBtn_clicked()
+{
+    filePath = QFileDialog::getOpenFileName(this, "Open Text File", "", "All Files (*)");
+
+    if (!filePath.isEmpty()) {
+        // Load and display file content
+        QFile file(filePath);
+        if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            ui->filePath->setText(filePath);
+        } else {
+            QMessageBox::warning(this, "Error", "Unable to open the file.");
+        }
+    }
+}
+
+
+void MainWindow::on_cmpBtn_clicked()
+{
+    if(!filePath.isEmpty()){
+        string content = CompDec::read_file(filePath.toStdString());
+        vector<int> data = CompDec::compress(content);
+        compressedData = CompDec::compressed_data_to_string(data);
+    }else{
+        QMessageBox::warning(this, "Error", "Choose a file.");
+    }
+}
+
+
+void MainWindow::on_saveCompressedBtn_clicked()
+{
+    if(!compressedData.empty()){
+        QString fileName = QFileDialog::getSaveFileName(this, "Save as");
+        if (fileName.isEmpty())
+            return;
+        if(!fileName.endsWith(".comp")) fileName+=".comp";
+        QFile file(fileName);
+        if (!file.open(QFile::WriteOnly | QFile::Text)) {
+            QMessageBox::warning(this, "Warning", "Cannot save file: " + file.errorString());
+            return;
+        }
+
+        QTextStream out(&file);
+        out << QString::fromStdString(compressedData);
+        file.close();
+    }else{
+        QMessageBox::warning(this, "Error", "Please Select a file or Press Compress");
+    }
+}
+
+
+void MainWindow::on_decompressBtn_clicked()
+{
+    if(!filePath.isEmpty()){
+        string content = CompDec::read_file(filePath.toStdString());
+        vector<int> data = CompDec::string_to_compressed_data(content);
+        decompressedData = CompDec::decompress(data);
+    }else{
+        QMessageBox::warning(this, "Error", "Choose a file.");
+    }
+}
+
+
+void MainWindow::on_saveDecompressBtn_clicked()
+{
+    if(!decompressedData.empty()){
+        QString fileName = QFileDialog::getSaveFileName(this, "Save as");
+        if (fileName.isEmpty())
+            return;
+        if(!fileName.endsWith(".xml")) fileName+=".xml";
+        QFile file(fileName);
+        if (!file.open(QFile::WriteOnly | QFile::Text)) {
+            QMessageBox::warning(this, "Warning", "Cannot save file: " + file.errorString());
+            return;
+        }
+
+        QTextStream out(&file);
+        out << QString::fromStdString(decompressedData);
+        file.close();
+    }else{
+        QMessageBox::warning(this, "Error", "Choose a file or Press Decompress.");
+    }
+}
+
+
 

@@ -1,4 +1,4 @@
-#include "graphAnalysis.hpp"
+#include "graphAnalysis.h"
 
 pair<int, string> mostInfluential(const char *inputFileName)
 {
