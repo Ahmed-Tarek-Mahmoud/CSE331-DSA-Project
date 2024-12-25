@@ -1,24 +1,33 @@
 #include "socialGraph.h"
 
-// Finds mutual connections between two users by parsing the input file
-vector<int> mutual(int user1Id, int user2Id, const char* inputFile) {
-    // Parse the input file to create a graph representation
+// Finds mutual connections between Multiple users 
+unordered_set<int> mutual(const vector<int>& userIds, const char* inputFile) {
+
     Graph userGraph = graphParsing(inputFile);
-    // Call the overloaded mutual function with the parsed graph data
-    return mutual(user1Id, user2Id, userGraph.id_to_following);
+    return mutual(userIds, userGraph.id_to_following);
+
 }
 
-// Overloaded function to find mutual connections using an existing graph
-vector<int> mutual(int user1Id, int user2Id, unordered_map<int,unordered_set<int>> following) {
-    vector<int> mutualConnections;
+unordered_set<int> mutual(const vector<int>& userIds, const unordered_map<int, unordered_set<int>>& following) {
+    if (userIds.empty()) return {};
 
-    // Iterate through the following list of user1 and check for mutual connections
-    for (int elem : following[user1Id]) {
-        if (following[user2Id].find(elem) != following[user2Id].end()) {
-            mutualConnections.push_back(elem);
+    // Initialize set with following set of the first user
+    unordered_set<int> mutualSet = following.at(userIds[0]);
+
+    for (size_t i = 1; i < userIds.size(); ++i) {
+        unordered_set<int> tempSet;
+
+        // Check each element in mutualSet if it is also in the following set of the current user
+        for (int elem : mutualSet) {
+            if (following.at(userIds[i]).find(elem) != following.at(userIds[i]).end()) {
+                tempSet.insert(elem);
+            }
         }
+        // Update mutualSet to be the intersection of itself and the current user's following set
+        mutualSet = std::move(tempSet);
     }
-    return mutualConnections;
+
+    return mutualSet;
 }
 
 // Suggests new connections for a user by parsing the input file
