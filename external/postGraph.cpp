@@ -7,15 +7,15 @@ void addPosts(TreeNode *posts,int id){
             vector<string> topic;
             string body;
             for(auto t:p->children){ // get post topic and body
-                if(t->TagName=="topics"){
-                    for(auto tpc:t->children)
-                      if(tpc->TagName=="topic"){
-                          topic.push_back(tpc->TagValue);
-                      }
+                if(t->TagName=="topics") {
+                    for(auto tpc:t->children) {
+                        if(tpc->TagName=="topic")
+                            topic.push_back(tpc->TagValue);
+                    }
                 }
                 if(t->TagName=="body")
                     body=t->TagValue;
-                if(topic!="" && body!="")
+                if(topic.size()!=0 && body!="")
                     break;
             }
             post* userpost= new post();
