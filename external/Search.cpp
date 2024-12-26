@@ -27,7 +27,8 @@ void Search::generateTopics() {
     for (int i = 0; i < postGraph.size(); i++) {
         // Loop through each post
         for(int j = 0; j < postGraph[i].size(); j++) {
-            topics[postGraph[i][j]->topic].push_back(postGraph[i][j]);
+              for(auto s:postGraph[i][j]->topic)
+            topics[s].push_back(postGraph[i][j]);
         }
     }
 }
