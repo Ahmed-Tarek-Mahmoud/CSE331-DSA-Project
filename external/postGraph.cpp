@@ -4,14 +4,18 @@ void addPosts(TreeNode *posts,int id){
     postGraph.push_back(vector<post*>());  // after reaching posts tag make new posts vector for this user
     for(auto p:posts->children){ // loop through all posts
         if(p->TagName=="post"){
-            string topic;
+            vector<string> topic;
             string body;
             for(auto t:p->children){ // get post topic and body
-                if(t->TagName=="topic")
-                    topic=t->TagValue;
+                if(t->TagName=="topics") {
+                    for(auto tpc:t->children) {
+                        if(tpc->TagName=="topic")
+                            topic.push_back(tpc->TagValue);
+                    }
+                }
                 if(t->TagName=="body")
                     body=t->TagValue;
-                if(topic!="" && body!="")
+                if(topic.size()!=0 && body!="")
                     break;
             }
             post* userpost= new post();

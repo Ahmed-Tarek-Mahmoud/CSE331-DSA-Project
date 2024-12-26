@@ -8,7 +8,7 @@ using namespace std;
 
 typedef struct {
     int userid;
-    string topic;
+    vector<string> topic;
     string body;
 }post;
 
