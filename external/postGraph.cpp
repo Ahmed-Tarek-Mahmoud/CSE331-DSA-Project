@@ -10,6 +10,7 @@ void addPosts(TreeNode *posts,int id){
                 if(t->TagName=="topics") {
                     for(auto tpc:t->children) {
                         if(tpc->TagName=="topic")
+                            while(tpc->TagValue.size() && (tpc->TagValue.back() == '\n' || tpc->TagValue.back() == ' ')) tpc->TagValue.pop_back();
                             topic.push_back(tpc->TagValue);
                     }
                 }

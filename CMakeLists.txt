@@ -12,7 +12,7 @@ set(COMMON_SOURCES
 
 # Add subdirectories for GUI and CLI builds
 if (BUILD_GUI)
-    add_subdirectory(gui)
+    add_subdirectory(XML-EDITOR)
 endif()
 
 if (BUILD_CLI)
