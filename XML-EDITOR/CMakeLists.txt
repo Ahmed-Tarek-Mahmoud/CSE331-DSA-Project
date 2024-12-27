@@ -24,6 +24,11 @@ set(PROJECT_SOURCES
         ../external/minifier.cpp
         ../external/Convert.cpp
         ../external/CompDec.cpp
+        ../external/socialGraph.cpp
+        ../external/graphParsing.cpp
+        ../external/graphAnalysis.cpp
+        ../external/postGraph.cpp
+        ../external/Search.cpp
 )
 
 # set(EXTERNAL_SOURCES
@@ -39,6 +44,12 @@ set(EXTERNAL_HEADERS
     ../external/minifier.hpp
     ../external/Convert.h
     ../external/CompDec.h
+    ../external/socialGraph.h
+    ../external/graphAnalysis.h
+    ../external/graphParsing.hpp
+    ../external/graph.hpp
+    ../external/postGraph.h
+    ../external/Search.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

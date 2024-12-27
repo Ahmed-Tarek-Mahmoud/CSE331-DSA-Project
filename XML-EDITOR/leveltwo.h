@@ -25,6 +25,10 @@ private slots:
 
     void on_comboBox_currentTextChanged(const QString &arg1);
 
+    void on_goSearchBtn_clicked();
+
+    void on_BrowseSearchBtn_clicked();
+
 private:
     Ui::LevelTwo *ui;
     QString saveFile;

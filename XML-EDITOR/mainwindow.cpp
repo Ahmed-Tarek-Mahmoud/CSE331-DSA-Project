@@ -19,6 +19,19 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->tabWidget->setStyleSheet("QTabBar::tab { "
+                                 "  background: lightgray; "
+                                 "  padding: 10px; "
+                                 "  border: 1px solid gray; "
+                                 "}"
+                                 "QTabBar::tab:selected { "
+                                 "  background: lightblue; "
+                                 "  color: black; "
+                                 "  font-weight: bold; "
+                                 "}"
+                                 "QTabBar::tab:hover { "
+                                 "  background: lightgreen; "
+                                 "}");
 
 }
 
@@ -264,16 +277,6 @@ void MainWindow::on_minifyBtn_clicked()
     ui->afterFormat->setReadOnly(true);
 }
 
-
-void MainWindow::on_toolButton_clicked()
-{
-
-    LevelTwo *l = new LevelTwo();
-    l->show();
-    this->close();
-}
-
-
 void MainWindow::on_tabWidget_tabBarClicked(int index)
 {
     if(index==4){
@@ -305,6 +308,7 @@ void MainWindow::on_cmpBtn_clicked()
         string content = CompDec::read_file(filePath.toStdString());
         vector<int> data = CompDec::compress(content);
         compressedData = CompDec::compressed_data_to_string(data);
+        ui->cmpBtn->setStyleSheet("background-color: lightgreen;");
     }else{
         QMessageBox::warning(this, "Error", "Choose a file.");
     }
@@ -326,6 +330,7 @@ void MainWindow::on_saveCompressedBtn_clicked()
 
         QTextStream out(&file);
         out << QString::fromStdString(compressedData);
+        ui->cmpBtn->setStyleSheet("");
         file.close();
     }else{
         QMessageBox::warning(this, "Error", "Please Select a file or Press Compress");
@@ -336,6 +341,7 @@ void MainWindow::on_saveCompressedBtn_clicked()
 void MainWindow::on_decompressBtn_clicked()
 {
     if(!filePath.isEmpty()){
+        ui->decompressBtn->setStyleSheet("background-color: lightgreen;");
         string content = CompDec::read_file(filePath.toStdString());
         vector<int> data = CompDec::string_to_compressed_data(content);
         decompressedData = CompDec::decompress(data);
@@ -361,6 +367,7 @@ void MainWindow::on_saveDecompressBtn_clicked()
         QTextStream out(&file);
         out << QString::fromStdString(decompressedData);
         file.close();
+        ui->decompressBtn->setStyleSheet("");
     }else{
         QMessageBox::warning(this, "Error", "Choose a file or Press Decompress.");
     }

@@ -22,9 +22,7 @@ public:
 private slots:
     void on_pushButton_clicked();
 
-
     void on_validateBtn_clicked();
-
 
     void on_correctBtn_clicked();
 
@@ -43,8 +41,6 @@ private slots:
     void on_JSONsave_clicked();
 
     void on_minifyBtn_clicked();
-
-    void on_toolButton_clicked();
 
     void on_tabWidget_tabBarClicked(int index);
 

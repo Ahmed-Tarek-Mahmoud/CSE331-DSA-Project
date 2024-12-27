@@ -7,6 +7,10 @@
 #include "../external/graphAnalysis.h"
 #include "../external/graphParsing.hpp"
 #include "../external/socialGraph.h"
+#include "../external/Tree.h"
+#include "../external/treeparse.h"
+#include "../external/postGraph.h"
+#include "../external/Search.h"
 #include "set"
 LevelTwo::LevelTwo(QWidget *parent)
     : QMainWindow(parent)
@@ -30,7 +34,6 @@ void LevelTwo::on_tabWidget_tabBarClicked(int index)
         m->show();
         this->close();
     }
-
 }
 
 
@@ -100,6 +103,106 @@ void LevelTwo::on_comboBox_currentTextChanged(const QString &arg1)
         ui->suggest->setVisible(true);
     } else {
         ui->suggest->setVisible(false);
+    }
+}
+
+
+void LevelTwo::on_goSearchBtn_clicked()
+{
+    if(ui->keyValue->text().isEmpty()){
+        QMessageBox::warning(this, "Error", "Please Type a Search Key");
+        return;
+    }
+
+    if(filePath.isEmpty()){
+        QMessageBox::warning(this, "Error", "Please Select a File");
+        return;
+    }
+
+    if(ui->topicRadioBtn->isChecked()){
+        QFile file(filePath);
+        if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            QTextStream result(&file);
+            string xmlContent = result.readAll().toStdString();
+            Tree mytree = parseTree(xmlContent);
+            postGraphParse(mytree.getRoot());
+            Search search;
+            search.generateTopics();
+            string t = ui->keyValue->text().toStdString();
+            vector<post *> ans = search.searchTopic(t);
+            string output = "";
+            for(auto p : ans){
+                output += "User ID: ";
+                output += char(p->userid + '0');
+                output += '\n';
+                output += "Post Topics:\n";
+                for(auto t : p->topic){
+                    output.pop_back();
+                    output += " < ";
+                    output += t;
+                    output.pop_back();
+                    output += " > ";
+                }
+                output += "\nPost Content: \n";
+                output += p->body;
+                output += "\n------------------------------------------------\n";
+            }
+            ui->searchResult->setText(QString::fromStdString(output));
+            file.close();
+        } else {
+            QMessageBox::warning(this, "Error", "Unable to open the file.");
+        }
+    }else if(ui->wordRadioBtn->isChecked()){
+        QFile file(filePath);
+        if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            QTextStream result(&file);
+            string xmlContent = result.readAll().toStdString();
+            Tree mytree = parseTree(xmlContent);
+            postGraphParse(mytree.getRoot());
+            Search search;
+            search.generateWords();
+            vector<post *> ans = search.searchWord(ui->keyValue->text().toStdString());
+            string output = "";
+            for(auto p : ans){
+                output += "User ID: ";
+                output += char(p->userid + '0');
+                output += '\n';
+                output += "Post Topics:\n";
+                for(auto t : p->topic){
+                    output.pop_back();
+                    output += " < ";
+                    output += t;
+                    output.pop_back();
+                    output += " > ";
+                }
+                output += "\nPost Content: \n";
+                output += p->body;
+                output += "\n------------------------------------------------\n";
+            }
+            ui->searchResult->setText(QString::fromStdString(output));
+            file.close();
+        } else {
+            QMessageBox::warning(this, "Error", "Unable to open the file.");
+        }
+    }else{
+        QMessageBox::warning(this, "Error", "Please Select Search Criteria");
+    }
+}
+
+
+void LevelTwo::on_BrowseSearchBtn_clicked()
+{
+    filePath = QFileDialog::getOpenFileName(this, "Open Text File", "", "All Files (*)");
+
+    if (!filePath.isEmpty()) {
+        // Load and display file content
+        QFile file(filePath);
+        if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            ui->filePath_Search->setText(filePath);
+            file.close();
+        } else {
+            QMessageBox::warning(this, "Error", "Unable to open the file.");
+        }
     }
 }
 
