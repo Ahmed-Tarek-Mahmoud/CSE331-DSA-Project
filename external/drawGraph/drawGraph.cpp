@@ -34,7 +34,7 @@ void writeGraphToFile(const Graph &usersGraph, const char *outputFileName)
 
 void runPythonScript()
 {
-    int result = system("./draw_graph");
+    int result = system("draw_graph.exe");
     if (result == 0)
     {
         std::cout << "Python script executed successfully.\n";

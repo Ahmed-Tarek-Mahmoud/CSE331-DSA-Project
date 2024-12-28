@@ -34,6 +34,6 @@ void writeGraphToFile(const Graph &usersGraph, const char *outputFileName);
  * @brief Executes a Python script to create a graph visualization.
  *
  * The script reads graph data from a file and generates the visualization. The Python script
- * must be available in the same directory or accessible from the system's PATH.
+ * must be available in the same directory
  */
 void runPythonScript();
