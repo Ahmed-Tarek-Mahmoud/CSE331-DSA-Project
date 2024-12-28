@@ -11,7 +11,11 @@
 #include "../external/treeparse.h"
 #include "../external/postGraph.h"
 #include "../external/Search.h"
+#include "../external/drawGraph/drawGraph.hpp"
 #include "set"
+#include "QProcess"
+#include "QDebug"
+#include "QPixmap"
 LevelTwo::LevelTwo(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::LevelTwo)
@@ -19,6 +23,15 @@ LevelTwo::LevelTwo(QWidget *parent)
     ui->setupUi(this);
     ui->suggest->setVisible(false);
     connect(ui->comboBox, &QComboBox::currentTextChanged, this, &LevelTwo::on_comboBox_currentTextChanged);
+    ui->tabWidget->setStyleSheet(
+        "QTabBar::tab:selected { "
+        "background: rgb(0, 85, 255); "
+        "color: black; "
+        "font-weight: bold;"
+        "}"
+        "QTabBar::tab::hover { "
+        "background: rgb(85, 170, 255) ; "
+        "}");
 }
 
 LevelTwo::~LevelTwo()
@@ -28,7 +41,7 @@ LevelTwo::~LevelTwo()
 
 void LevelTwo::on_tabWidget_tabBarClicked(int index)
 {
-    if(index==2){
+    if(index==3){
 
         MainWindow *m = new MainWindow();
         m->show();
@@ -140,7 +153,6 @@ void LevelTwo::on_goSearchBtn_clicked()
                     output.pop_back();
                     output += " < ";
                     output += t;
-                    output.pop_back();
                     output += " > ";
                 }
                 output += "\nPost Content: \n";
@@ -172,7 +184,6 @@ void LevelTwo::on_goSearchBtn_clicked()
                     output.pop_back();
                     output += " < ";
                     output += t;
-                    output.pop_back();
                     output += " > ";
                 }
                 output += "\nPost Content: \n";
@@ -204,5 +215,89 @@ void LevelTwo::on_BrowseSearchBtn_clicked()
             QMessageBox::warning(this, "Error", "Unable to open the file.");
         }
     }
+}
+
+
+void LevelTwo::on_BrowseDrawBtn_clicked()
+{
+    filePath = QFileDialog::getOpenFileName(this, "Open Text File", "", "All Files (*)");
+
+    if (!filePath.isEmpty()) {
+        // Load and display file content
+        QFile file(filePath);
+        if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            ui->filePathDraw->setText(filePath);
+            QTextStream result(&file);
+            ui->previewDraw->setText(result.readAll());
+            file.close();
+        } else {
+            QMessageBox::warning(this, "Error", "Unable to open the file.");
+        }
+    }
+}
+
+bool validJPG(QString name){
+    return name.endsWith(".jpg");
+}
+
+void LevelTwo::on_drawBtn_clicked()
+{
+    if(!filePath.isEmpty()){
+
+
+        fileStrPath = filePath.toStdString();
+        const char * input = fileStrPath.c_str();
+        const char * output;
+        QString fileName = QFileDialog::getSaveFileName(this, "Save as");
+        if (fileName.isEmpty())
+            return;
+        if(!validJPG(fileName)) fileName+=".jpg";
+        output = fileName.toStdString().c_str();
+        Graph g = graphParsing(input);
+        writeGraphToFile(g , output);
+        QProcess process;
+
+        QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+        QString tempDir = QDir::currentPath() + "/temp";
+        QDir().mkdir(tempDir); // Create temp directory if it doesn't exist
+        env.insert("TEMP", tempDir);
+        env.insert("TMP", tempDir);
+        process.setProcessEnvironment(env);
+
+        process.setWorkingDirectory(QCoreApplication::applicationDirPath());
+        QString scriptPath = QCoreApplication::applicationDirPath() + "/draw_graph.exe"; // Path to your executable
+
+        process.start(scriptPath);
+
+        // Wait for it to finish
+        if (!process.waitForFinished())
+        {
+            qDebug() << "Error starting process:" << process.errorString();
+            return;
+        }
+        QPixmap pm(output);
+        ui->imageLabel->setPixmap(pm);
+        ui->imageLabel->setScaledContents(true);
+        // Read output and error
+        // QByteArray out = process.readAllStandardOutput();
+        // QByteArray error = process.readAllStandardError();
+
+        // qDebug() << "Output:" << out;
+        // qDebug() << "Error:" << error;
+        // qDebug() << "Exit Code:" << process.exitCode();
+    }else{
+        QMessageBox::warning(this, "Error", "Please Select a File");
+        return;
+    }
+}
+
+
+void LevelTwo::on_clearBtn_clicked()
+{
+    filePath = "";
+    ui->filePathDraw->clear();
+    ui->previewDraw->clear();
+    ui->imageLabel->clear();
+    ui->imageLabel->setText("                      Image wil be displayed here                  ");
 }
 

@@ -29,6 +29,12 @@ private slots:
 
     void on_BrowseSearchBtn_clicked();
 
+    void on_BrowseDrawBtn_clicked();
+
+    void on_drawBtn_clicked();
+
+    void on_clearBtn_clicked();
+
 private:
     Ui::LevelTwo *ui;
     QString saveFile;

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "graphParsing.hpp"
+#include "../graphParsing.hpp"
 #include <fstream>
 #include <cstdlib>
 

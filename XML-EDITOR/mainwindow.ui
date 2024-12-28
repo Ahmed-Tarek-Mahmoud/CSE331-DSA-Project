@@ -35,6 +35,11 @@
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
+      <property name="styleSheet">
+       <string notr="true">                    
+                              
+ </string>
+      </property>
       <property name="currentIndex">
        <number>3</number>
       </property>
@@ -466,7 +471,7 @@
           <x>40</x>
           <y>30</y>
           <width>691</width>
-          <height>31</height>
+          <height>46</height>
          </rect>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_10">

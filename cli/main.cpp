@@ -13,14 +13,14 @@
 #include "../external/graphAnalysis.h"
 #include "../external/postGraph.h"
 #include "../external/Search.h"
+#include "../external/drawGraph/drawGraph.hpp"
 #include "set"
 #include "unordered_set"
 
 
 using namespace std;
 int main(int argc, char *argv[]) {
-    // main program
-
+    // Level 1
     if (strcmp(argv[1] , "format") == 0 && strcmp(argv[2] , "-i") == 0){
         ifstream file(argv[3]);
         if (!file.is_open()) {
@@ -82,10 +82,19 @@ int main(int argc, char *argv[]) {
     else if (strcmp(argv[1] , "verify") == 0 && strcmp(argv[2] , "-i") == 0){
         vector<string> correct;
         vector<error> erVec = validityCheck_Correction(argv[3] , correct);
+        if (erVec.empty()){
+            cout<<"Valid."<<endl;
+            return 0;
+        }
+        cout<<"Number of error: "<<erVec.size()<<endl;
         for(auto &e:erVec) cout<<e.getMessage()<<endl;
         if (argc > 4){
             FILE *fp = freopen(argv[5] , "w", stdout);
-            for(auto &s:correct) cout<<s<<endl;
+            string totalXML = "";
+            for(auto &ss : correct) totalXML += ss;
+            Tree myTree;
+            myTree = parseTree(totalXML);
+            prettifyprint(myTree.getRoot() , 0);
             fclose(fp);
         }
     }
@@ -123,8 +132,7 @@ int main(int argc, char *argv[]) {
     }
 
     // Level 2
-//    else
-        if (strcmp(argv[1] , "most_active") == 0 && strcmp(argv[2] , "-i") == 0){
+    else if (strcmp(argv[1] , "most_active") == 0 && strcmp(argv[2] , "-i") == 0){
         pair<int , string> most_active = mostActiveUser(argv[3]);
         cout<<"User ID: "<<most_active.first <<endl;
         cout<<"Username: "<<most_active.second<<endl;
@@ -171,38 +179,40 @@ int main(int argc, char *argv[]) {
             cout<<"Mutuals : ";
             for(auto id : ans) cout<<id<<" ";
             cout<<endl;
-    }else if (strcmp(argv[1] , "search") == 0 && strcmp(argv[2] , "-w") == 0){
-        if (argc < 6){
-            cout<<"No matching command"<<endl;
-            return 1;
-        }
-        ifstream file(argv[5]);
-        if (!file.is_open()) {
-            // print error message and return
-            cerr << "Failed to open file: " << argv[3] << endl;
+    } else if (strcmp(argv[1] , "search") == 0 && strcmp(argv[2] , "-w") == 0){
+            if (argc < 6){
+                cout<<"No matching command"<<endl;
+                return 1;
+            }
+            ifstream file(argv[5]);
+            if (!file.is_open()) {
+                // print error message and return
+                cerr << "Failed to open file: " << argv[3] << endl;
 
-            return 1;
-        }
+                return 1;
+            }
 
-        string line , totalXML = "";
-        while (getline(file, line)) {
-            totalXML += line;
+            string line , totalXML = "";
+            while (getline(file, line)) {
+                totalXML += line;
+            }
+            file.close();
+            string key = argv[3];
+            Tree mytree = parseTree(totalXML);
+            postGraphParse(mytree.getRoot());
+            Search search;
+            search.generateWords();
+            vector<post *> ans = search.searchWord(key);
+            for(auto p : ans){
+                cout<<"User ID: "<<p->userid<<endl;
+                cout<<"Post Topics: ";
+                for(auto t : p->topic) cout<<t<<" ";
+                cout<<endl;
+                cout<<"Post Content: \n"<<p->body<<endl;
+                cout<<"\n-----------------------------------------------------------\n";
+            }
         }
-        file.close();
-        string key = argv[3];
-        Tree mytree = parseTree(totalXML);
-        postGraphParse(mytree.getRoot());
-        Search search;
-        search.generateWords();
-        vector<post *> ans = search.searchWord(key);
-        for(auto p : ans){
-            cout<<"User ID: "<<p->userid<<endl;
-            cout<<"Post Topics: ";
-            for(auto t : p->topic) cout<<t<<" ";
-            cout<<endl;
-            cout<<"Post Content: \n"<<p->body<<endl;
-        }
-    }else if (strcmp(argv[1] , "search") == 0 && strcmp(argv[2] , "-t") == 0){
+        else if (strcmp(argv[1] , "search") == 0 && strcmp(argv[2] , "-t") == 0){
             if (argc < 6){
                 cout<<"No matching command"<<endl;
                 return 1;
@@ -231,7 +241,16 @@ int main(int argc, char *argv[]) {
                 for(auto t : p->topic) cout<<t<<" ";
                 cout<<endl;
                 cout<<"Post Content: \n"<<p->body<<endl;
+                cout<<"\n-----------------------------------------------------------\n";
             }
-     }
+        }
+        else if (strcmp(argv[1] , "draw") == 0 && strcmp(argv[2] , "-i") == 0){
+            if (argc < 6){
+                cout<<"No matching command"<<endl;
+                return 1;
+            }
+            drawGraph(argv[3] , argv[5]);
+            cout<<"Done."<<endl;
+        }
     return 0;
 }

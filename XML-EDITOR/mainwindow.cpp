@@ -19,20 +19,15 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->tabWidget->setStyleSheet("QTabBar::tab { "
-                                 "  background: lightgray; "
-                                 "  padding: 10px; "
-                                 "  border: 1px solid gray; "
-                                 "}"
-                                 "QTabBar::tab:selected { "
-                                 "  background: lightblue; "
-                                 "  color: black; "
-                                 "  font-weight: bold; "
-                                 "}"
-                                 "QTabBar::tab:hover { "
-                                 "  background: lightgreen; "
-                                 "}");
-
+    ui->tabWidget->setStyleSheet(
+        "QTabBar::tab:selected { "
+        "background: rgb(0, 85, 255); "
+        "color: black; "
+        "font-weight: bold;"
+                        "}"
+        "QTabBar::tab::hover { "
+        "background: rgb(85, 170, 255) ; "
+    "}");
 }
 
 MainWindow::~MainWindow()
@@ -111,6 +106,8 @@ void MainWindow::on_validateBtn_clicked()
 
         // Show the QMessageBox with the error messages
         QMessageBox::warning(this, "Errors", errorMessages);
+    }else{
+        QMessageBox::warning(this, "Valid", "Entered file has no errors");
     }
     return;
 }
