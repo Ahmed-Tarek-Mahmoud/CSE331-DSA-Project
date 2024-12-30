@@ -35,8 +35,16 @@
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
+<<<<<<< Updated upstream
       <property name="currentIndex">
        <number>0</number>
+=======
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="currentIndex">
+       <number>2</number>
+>>>>>>> Stashed changes
       </property>
       <widget class="QWidget" name="validateTab">
        <attribute name="title">

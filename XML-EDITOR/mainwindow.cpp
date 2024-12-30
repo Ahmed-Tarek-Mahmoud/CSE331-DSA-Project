@@ -33,11 +33,60 @@ bool validJSONname(QString name){
     return name.endsWith(".json");
 }
 
+void MainWindow::resetButtonStyles(){
+    QString buttonStyle =
+        "QPushButton {"
+        "    background-color: lightgray;"   // Default background color
+        "    border: 1px solid black;"
+        "    border-radius: 5px;"
+        "    padding: 5px;"
+        "}"
+        "QPushButton:hover {"
+        "    background-color: lightblue;"  // Color when hovered
+        "}"
+        "QPushButton:pressed {"
+        "    background-color: darkblue;"   // Color when clicked
+        "    color: white;"
+        "}"
+        "QPushButton:checked {"
+        "    background-color: darkblue;"   // Stay dark blue after click
+        "    color: white;"
+        "}";
 
+    // Apply the button style to all checkable buttons
+    ui->convertJSON->setStyleSheet(buttonStyle);
 
+    ui->browseJSON->setStyleSheet(buttonStyle);
+
+    ui->JSONsave->setStyleSheet(buttonStyle);
+
+    // You can apply the same to other buttons in the same way
+    ui->pushButton->setStyleSheet(buttonStyle);
+    ui->validateBtn->setStyleSheet(buttonStyle);
+    ui->correctBtn->setStyleSheet(buttonStyle);
+    ui->saveAsBtn->setStyleSheet(buttonStyle);
+    ui->browseFormat->setStyleSheet(buttonStyle);
+    ui->formatBtn->setStyleSheet(buttonStyle);
+    ui->saveFormated->setStyleSheet(buttonStyle);
+    ui->minifyBtn->setStyleSheet(buttonStyle);
+
+}
 
 void MainWindow::on_pushButton_clicked()
 {
+    resetButtonStyles();
+
+    // Set the specific style for the clicked button
+    ui->pushButton->setStyleSheet(
+        "QPushButton {"
+        "    background-color: darkblue;"
+        "    color: white;"
+        "} "
+        "QPushButton:checked {"
+        "    background-color: darkblue;"
+        "    color: white;"
+        "} "
+        );
     filePath = QFileDialog::getOpenFileName(this, "Open Text File", "", "XML Files (*.xml);;All Files (*)");
 
     if (!filePath.isEmpty()) {
@@ -57,7 +106,25 @@ void MainWindow::on_pushButton_clicked()
 // @adnan add here highlighting errors then delete this comment
 void MainWindow::on_validateBtn_clicked()
 {
+<<<<<<< Updated upstream
     if(!filePath.isEmpty()){
+=======
+    resetButtonStyles();
+
+    // Set the specific style for the clicked button
+    ui->validateBtn->setStyleSheet(
+        "QPushButton {"
+        "    background-color: darkblue;"
+        "    color: white;"
+        "} "
+        "QPushButton:checked {"
+        "    background-color: darkblue;"
+        "    color: white;"
+        "} "
+        );
+    vector<error> errors;
+    if (!filePath.isEmpty()) {
+>>>>>>> Stashed changes
         fileStrPath = filePath.toStdString();
         validityCheck_Correction(fileStrPath , corrected);
     }else {
@@ -67,7 +134,24 @@ void MainWindow::on_validateBtn_clicked()
 
 void MainWindow::on_correctBtn_clicked()
 {
+<<<<<<< Updated upstream
     QString out;
+=======
+    resetButtonStyles();
+
+    // Set the specific style for the clicked button
+    ui->correctBtn->setStyleSheet(
+        "QPushButton {"
+        "    background-color: darkblue;"
+        "    color: white;"
+        "} "
+        "QPushButton:checked {"
+        "    background-color: darkblue;"
+        "    color: white;"
+        "} "
+        );
+    string out;
+>>>>>>> Stashed changes
     for(auto st : corrected) out += st , out+='\n';
     ui->correctedField->setText(out);
     ui->correctedField->setReadOnly(true);
@@ -76,6 +160,19 @@ void MainWindow::on_correctBtn_clicked()
 
 void MainWindow::on_saveAsBtn_clicked()
 {
+    resetButtonStyles();
+
+    // Set the specific style for the clicked button
+    ui->saveAsBtn->setStyleSheet(
+        "QPushButton {"
+        "    background-color: darkblue;"
+        "    color: white;"
+        "} "
+        "QPushButton:checked {"
+        "    background-color: darkblue;"
+        "    color: white;"
+        "} "
+        );
     QString fileName = QFileDialog::getSaveFileName(this, "Save as");
     if (fileName.isEmpty())
         return;
@@ -97,6 +194,19 @@ void MainWindow::on_saveAsBtn_clicked()
 
 void MainWindow::on_browseFormat_clicked()
 {
+    resetButtonStyles();
+
+    // Set the specific style for the clicked button
+    ui->browseFormat->setStyleSheet(
+        "QPushButton {"
+        "    background-color: darkblue;"
+        "    color: white;"
+        "} "
+        "QPushButton:checked {"
+        "    background-color: darkblue;"
+        "    color: white;"
+        "} "
+        );
     filePath = QFileDialog::getOpenFileName(this, "Open Text File", "", "XML Files (*.xml);;All Files (*)");
 
     if (!filePath.isEmpty()) {
@@ -115,6 +225,19 @@ void MainWindow::on_browseFormat_clicked()
 
 void MainWindow::on_formatBtn_clicked()
 {
+    resetButtonStyles();
+
+    // Set the specific style for the clicked button
+    ui->formatBtn->setStyleSheet(
+        "QPushButton {"
+        "    background-color: darkblue;"
+        "    color: white;"
+        "} "
+        "QPushButton:checked {"
+        "    background-color: darkblue;"
+        "    color: white;"
+        "} "
+        );
     QString xml = ui->beforeFormat->toPlainText();
     Tree mytree = parseTree(xml.toStdString());
     FILE *fp = freopen("temp_format.xml" , "w", stdout);
@@ -135,6 +258,19 @@ void MainWindow::on_formatBtn_clicked()
 
 void MainWindow::on_saveFormated_clicked()
 {
+    resetButtonStyles();
+
+    // Set the specific style for the clicked button
+    ui->saveFormated->setStyleSheet(
+        "QPushButton {"
+        "    background-color: darkblue;"
+        "    color: white;"
+        "} "
+        "QPushButton:checked {"
+        "    background-color: darkblue;"
+        "    color: white;"
+        "} "
+        );
     QString saveFile = QFileDialog::getSaveFileName(this, "Save as");
     if (saveFile.isEmpty())
         return;
@@ -158,6 +294,27 @@ void MainWindow::on_saveFormated_clicked()
 
 void MainWindow::on_convertJSON_clicked()
 {
+    resetButtonStyles();
+
+    // Set the specific style for the clicked button
+    ui->convertJSON->setStyleSheet(
+        "QPushButton {"
+        "    background-color: darkblue;"
+        "    color: white;"
+        "} "
+        "QPushButton:checked {"
+        "    background-color: darkblue;"
+        "    color: white;"
+        "} "
+        "QPushButton:hover {"
+        "    background-color: #3b5a8e;"  // Lighter shade of blue for hover effect
+        "    color: white;"                // Keep text white on hover
+        "} "
+        "QPushButton:checked:hover {"
+        "    background-color: #2c4b74;"  // Even darker shade for checked button on hover
+        "    color: white;"                // Keep text white when checked and hovered
+        "} "
+        );
         QString xmlFormat = ui->xmlFormat->toPlainText();
         std::string xmlFormat_s = xmlFormat.toStdString();
         Tree MyTree = parseTree(xmlFormat_s);
@@ -169,6 +326,19 @@ void MainWindow::on_convertJSON_clicked()
 
 void MainWindow::on_browseJSON_clicked()
 {
+    resetButtonStyles();
+
+    // Set the specific style for the clicked button
+    ui->browseJSON->setStyleSheet(
+        "QPushButton {"
+        "    background-color: darkblue;"
+        "    color: white;"
+        "} "
+        "QPushButton:checked {"
+        "    background-color: darkblue;"
+        "    color: white;"
+        "} "
+        );
     filePath = QFileDialog::getOpenFileName(this, "Open Text File", "", "XML Files (*.xml);;All Files (*)");
 
     if (!filePath.isEmpty()) {
@@ -187,6 +357,19 @@ void MainWindow::on_browseJSON_clicked()
 
 void MainWindow::on_JSONsave_clicked()
 {
+    resetButtonStyles();
+
+    // Set the specific style for the clicked button
+    ui->JSONsave->setStyleSheet(
+        "QPushButton {"
+        "    background-color: darkblue;"
+        "    color: white;"
+        "} "
+        "QPushButton:checked {"
+        "    background-color: darkblue;"
+        "    color: white;"
+        "} "
+        );
     QString fileName = QFileDialog::getSaveFileName(this, "Save as");
     if (fileName.isEmpty())
         return;
@@ -208,6 +391,19 @@ void MainWindow::on_JSONsave_clicked()
 
 void MainWindow::on_minifyBtn_clicked()
 {
+    resetButtonStyles();
+
+    // Set the specific style for the clicked button
+    ui->minifyBtn->setStyleSheet(
+        "QPushButton {"
+        "    background-color: darkblue;"
+        "    color: white;"
+        "} "
+        "QPushButton:checked {"
+        "    background-color: darkblue;"
+        "    color: white;"
+        "} "
+        );
     const char* file_s = filePath.toStdString().c_str();
     QString ans = QString::fromStdString(minifyXML(file_s));
     ui->afterFormat->setPlainText(ans);
@@ -226,6 +422,11 @@ void MainWindow::on_toolButton_clicked()
 
 void MainWindow::on_tabWidget_tabBarClicked(int index)
 {
+    resetButtonStyles();
+    ui->cmpBrowseBtn->setStyleSheet("");
+    ui->cmpBtn->setStyleSheet("");
+    ui->decompressBtn->setStyleSheet("");
+
     if(index==4){
         LevelTwo *l = new LevelTwo();
         l->show();

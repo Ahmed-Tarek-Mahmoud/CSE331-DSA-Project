@@ -48,6 +48,21 @@ private slots:
 
     void on_tabWidget_tabBarClicked(int index);
 
+<<<<<<< Updated upstream
+=======
+    void on_saveDecompressBtn_clicked();
+
+    void on_decompressBtn_clicked();
+
+    void on_saveCompressedBtn_clicked();
+
+    void on_cmpBtn_clicked();
+
+    void on_cmpBrowseBtn_clicked();
+
+     void resetButtonStyles();
+
+>>>>>>> Stashed changes
 private:
     Ui::MainWindow *ui;
     QString saveFile;
