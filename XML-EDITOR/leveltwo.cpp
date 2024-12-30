@@ -39,8 +39,44 @@ LevelTwo::~LevelTwo()
     delete ui;
 }
 
+void LevelTwo::resetStyleSheet()
+{
+    QString buttonStyle =
+        "QPushButton {"
+        "    background-color: lightgray;"   // Default background color
+        "    border: 1px solid black;"
+        "    border-radius: 5px;"
+        "    padding: 5px;"
+        "}"
+        "QPushButton:hover {"
+        "    background-color: lightblue;"  // Color when hovered
+        "}"
+        "QPushButton:pressed {"
+        "    background-color: darkblue;"   // Color when clicked
+        "    color: white;"
+        "}"
+        "QPushButton:checked {"
+        "    background-color: darkblue;"   // Stay dark blue after click
+        "    color: white;"
+        "}";
+    // Reset the styles for all buttons to their default state
+    ui->BrowseAnalysis->setStyleSheet(buttonStyle);
+    ui->gobtn->setStyleSheet(buttonStyle);
+    ui->goSearchBtn->setStyleSheet(buttonStyle);
+    ui->BrowseSearchBtn->setStyleSheet(buttonStyle);
+    ui->BrowseDrawBtn->setStyleSheet(buttonStyle);
+    ui->drawBtn->setStyleSheet(buttonStyle);
+    ui->clearBtn->setStyleSheet(buttonStyle);
+
+    // You can add other buttons in a similar manner if there are more buttons.
+}
+
+
 void LevelTwo::on_tabWidget_tabBarClicked(int index)
 {
+
+    resetStyleSheet();
+
     if(index==3){
 
         MainWindow *m = new MainWindow();
@@ -52,6 +88,18 @@ void LevelTwo::on_tabWidget_tabBarClicked(int index)
 
 void LevelTwo::on_BrowseAnalysis_clicked()
 {
+    resetStyleSheet();
+    // Set the specific style for the clicked button
+    ui->BrowseAnalysis->setStyleSheet(
+        "QPushButton {"
+        "    background-color: darkblue;"
+        "    color: white;"
+        "} "
+        "QPushButton:checked {"
+        "    background-color: darkblue;"
+        "    color: white;"
+        "} "
+        );
     filePath = QFileDialog::getOpenFileName(this, "Open Text File", "", "All Files (*)");
 
     if (!filePath.isEmpty()) {
@@ -68,6 +116,18 @@ void LevelTwo::on_BrowseAnalysis_clicked()
 
 void LevelTwo::on_gobtn_clicked()
 {
+    resetStyleSheet();
+    // Set the specific style for the clicked button
+    ui->gobtn->setStyleSheet(
+        "QPushButton {"
+        "    background-color: darkblue;"
+        "    color: white;"
+        "} "
+        "QPushButton:checked {"
+        "    background-color: darkblue;"
+        "    color: white;"
+        "} "
+        );
     if(!filePath.isEmpty()){
         QString selected = ui->comboBox->currentText();
         filePath = ui->filepath2->text();
@@ -112,6 +172,7 @@ void LevelTwo::on_gobtn_clicked()
 
 void LevelTwo::on_comboBox_currentTextChanged(const QString &arg1)
 {
+
     if (arg1 == "Suggest Users") {
         ui->suggest->setVisible(true);
     } else {
@@ -119,6 +180,20 @@ void LevelTwo::on_comboBox_currentTextChanged(const QString &arg1)
     }
 }
 
+void LevelTwo::on_goSearchBtn_clicked()
+{
+    resetStyleSheet();
+    // Set the specific style for the clicked button
+    ui->goSearchBtn->setStyleSheet(
+        "QPushButton {"
+        "    background-color: darkblue;"
+        "    color: white;"
+        "} "
+        "QPushButton:checked {"
+        "    background-color: darkblue;"
+        "    color: white;"
+        "} "
+        );
 
 void LevelTwo::on_goSearchBtn_clicked()
 {
@@ -203,6 +278,20 @@ void LevelTwo::on_goSearchBtn_clicked()
 
 void LevelTwo::on_BrowseSearchBtn_clicked()
 {
+    resetStyleSheet();
+
+    // Set the specific style for the clicked button
+    ui->BrowseSearchBtn->setStyleSheet(
+        "QPushButton {"
+        "    background-color: darkblue;"
+        "    color: white;"
+        "} "
+        "QPushButton:checked {"
+        "    background-color: darkblue;"
+        "    color: white;"
+        "} "
+        );
+
     filePath = QFileDialog::getOpenFileName(this, "Open Text File", "", "All Files (*)");
 
     if (!filePath.isEmpty()) {
@@ -220,6 +309,19 @@ void LevelTwo::on_BrowseSearchBtn_clicked()
 
 void LevelTwo::on_BrowseDrawBtn_clicked()
 {
+    resetStyleSheet();
+    // Set the specific style for the clicked button
+    ui->BrowseDrawBtn->setStyleSheet(
+        "QPushButton {"
+        "    background-color: darkblue;"
+        "    color: white;"
+        "} "
+        "QPushButton:checked {"
+        "    background-color: darkblue;"
+        "    color: white;"
+        "} "
+        );
+
     filePath = QFileDialog::getOpenFileName(this, "Open Text File", "", "All Files (*)");
 
     if (!filePath.isEmpty()) {
@@ -242,6 +344,20 @@ bool validJPG(QString name){
 
 void LevelTwo::on_drawBtn_clicked()
 {
+    resetStyleSheet();
+
+    // Set the specific style for the clicked button
+    ui->drawBtn->setStyleSheet(
+        "QPushButton {"
+        "    background-color: darkblue;"
+        "    color: white;"
+        "} "
+        "QPushButton:checked {"
+        "    background-color: darkblue;"
+        "    color: white;"
+        "} "
+        );
+
     if(!filePath.isEmpty()){
 
 
@@ -294,10 +410,23 @@ void LevelTwo::on_drawBtn_clicked()
 
 void LevelTwo::on_clearBtn_clicked()
 {
+    resetStyleSheet();
+    // Set the specific style for the clicked button
+    ui->clearBtn->setStyleSheet(
+        "QPushButton {"
+        "    background-color: darkblue;"
+        "    color: white;"
+        "} "
+        "QPushButton:checked {"
+        "    background-color: darkblue;"
+        "    color: white;"
+        "} "
+        );
     filePath = "";
     ui->filePathDraw->clear();
     ui->previewDraw->clear();
     ui->imageLabel->clear();
     ui->imageLabel->setText("                      Image wil be displayed here                  ");
 }
+
 

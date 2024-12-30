@@ -40,6 +40,7 @@ private:
     QString saveFile;
     QString filePath;  // Qstring version of the path
     std::string fileStrPath;
+    void resetStyleSheet();
 };
 
 #endif // LEVELTWO_H
