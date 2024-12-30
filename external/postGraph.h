@@ -1,7 +1,6 @@
 #ifndef POSTGRAPH_H
 #define POSTGRAPH_H
-
-#include "headers.h"
+using namespace std;
 #include <string>
 #include <vector>
 #include <queue>
@@ -9,11 +8,11 @@
 
 typedef struct {
     int userid;
-    string topic;
+    vector<string> topic;
     string body;
 }post;
 
-vector<vector<post>> postGraph;
+inline vector<vector<post*>> postGraph;
 
 void addPosts(TreeNode *posts,int id);
 

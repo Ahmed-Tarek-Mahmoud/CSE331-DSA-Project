@@ -35,16 +35,13 @@
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
-<<<<<<< Updated upstream
-      <property name="currentIndex">
-       <number>0</number>
-=======
       <property name="styleSheet">
-       <string notr="true"/>
+       <string notr="true">                    
+                              
+ </string>
       </property>
       <property name="currentIndex">
-       <number>2</number>
->>>>>>> Stashed changes
+       <number>3</number>
       </property>
       <widget class="QWidget" name="validateTab">
        <attribute name="title">
@@ -422,7 +419,7 @@
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_8">
          <item>
-          <widget class="QPushButton" name="pushButton_15">
+          <widget class="QPushButton" name="decompressBtn">
            <property name="enabled">
             <bool>true</bool>
            </property>
@@ -454,7 +451,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_16">
+          <widget class="QPushButton" name="saveDecompressBtn">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -474,7 +471,7 @@
           <x>40</x>
           <y>30</y>
           <width>691</width>
-          <height>31</height>
+          <height>46</height>
          </rect>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_10">
@@ -486,10 +483,10 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit"/>
+          <widget class="QLineEdit" name="filePath"/>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_11">
+          <widget class="QPushButton" name="cmpBrowseBtn">
            <property name="text">
             <string>Browse</string>
            </property>
@@ -508,7 +505,7 @@
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_7">
          <item>
-          <widget class="QPushButton" name="pushButton_13">
+          <widget class="QPushButton" name="cmpBtn">
            <property name="enabled">
             <bool>true</bool>
            </property>
@@ -540,7 +537,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_14">
+          <widget class="QPushButton" name="saveCompressedBtn">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -570,7 +567,7 @@
      <x>0</x>
      <y>0</y>
      <width>829</width>
-     <height>18</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>

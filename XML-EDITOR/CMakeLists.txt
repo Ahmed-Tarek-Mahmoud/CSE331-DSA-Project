@@ -23,6 +23,13 @@ set(PROJECT_SOURCES
         ../external/Tree.cpp
         ../external/minifier.cpp
         ../external/Convert.cpp
+        ../external/CompDec.cpp
+        ../external/socialGraph.cpp
+        ../external/graphParsing.cpp
+        ../external/graphAnalysis.cpp
+        ../external/postGraph.cpp
+        ../external/Search.cpp
+        ../external/drawGraph/drawGraph.cpp
 )
 
 # set(EXTERNAL_SOURCES
@@ -37,6 +44,14 @@ set(EXTERNAL_HEADERS
     ../external/Tree.h
     ../external/minifier.hpp
     ../external/Convert.h
+    ../external/CompDec.h
+    ../external/socialGraph.h
+    ../external/graphAnalysis.h
+    ../external/graphParsing.hpp
+    ../external/graph.hpp
+    ../external/postGraph.h
+    ../external/Search.h
+    ../external/drawGraph/drawGraph.hpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -71,7 +86,7 @@ target_link_libraries(XML-EDITOR PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 # If you are developing for iOS or macOS you should consider setting an
 # explicit, fixed bundle identifier manually though.
 if(${QT_VERSION} VERSION_LESS 6.1.0)
-  set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.GUI-xml)
+  set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.XML-EDITOR)
 endif()
 set_target_properties(XML-EDITOR PROPERTIES
     ${BUNDLE_ID_OPTION}

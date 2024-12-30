@@ -1,27 +1,33 @@
 #include "postGraph.h"
 
 void addPosts(TreeNode *posts,int id){
-    postGraph.push_back(vector<post>());  // after reaching posts tag make new posts vector for this user
+    postGraph.push_back(vector<post*>());  // after reaching posts tag make new posts vector for this user
     for(auto p:posts->children){ // loop through all posts
         if(p->TagName=="post"){
-            string topic;
+            vector<string> topic;
             string body;
             for(auto t:p->children){ // get post topic and body
-                if(t->TagName=="topic")
-                    topic=t->TagValue;
+                if(t->TagName=="topics") {
+                    for(auto tpc:t->children) {
+                        if(tpc->TagName=="topic")
+                            while(tpc->TagValue.size() && (tpc->TagValue.back() == '\n' || tpc->TagValue.back() == ' ')) tpc->TagValue.pop_back();
+                            topic.push_back(tpc->TagValue);
+                    }
+                }
                 if(t->TagName=="body")
                     body=t->TagValue;
-                if(topic!="" && body!="")
+                if(topic.size()!=0 && body!="")
                     break;
             }
-            post userpost;
-            userpost.userid=id;
-            userpost.topic=topic;
-            userpost.body=body;
+            post* userpost= new post();
+            userpost->userid=id;
+            userpost->topic=topic;
+            userpost->body=body;
 
             postGraph.back().push_back(userpost); // add post to graph
         }
     }
+
 }
 
 void postGraphParse(TreeNode* root){
@@ -37,8 +43,7 @@ void postGraphParse(TreeNode* root){
         myqueue.pop();
         for(auto n:users->children)
             myqueue.push(n);
-
-    }while(users==nullptr);
+    }while(users!=nullptr);
     TreeNode* user=nullptr;
     // the many if conditions in following code is to handle cases where
     for(auto n:users->children){ // loop through all users
@@ -51,7 +56,6 @@ void postGraphParse(TreeNode* root){
                 if(u->TagName=="posts"){ // get posts
                     addPosts(u,userId); // add posts tp postGraph
                 }
-
             }
         }
     }

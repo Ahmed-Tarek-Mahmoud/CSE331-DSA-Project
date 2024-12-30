@@ -1,5 +1,5 @@
-D:/Senior\ 1\ CSE/DS/Project/CSE331-DSA-Project/GUI2/XML-EDITOR/build/Desktop_Qt_6_8_0_llvm_mingw_64_bit-Debug/XML-EDITOR_autogen/EWIEGA46WW/moc_mainwindow.cpp: D:/Senior\ 1\ CSE/DS/Project/CSE331-DSA-Project/GUI2/XML-EDITOR/mainwindow.h \
-  D:/Senior\ 1\ CSE/DS/Project/CSE331-DSA-Project/GUI2/XML-EDITOR/build/Desktop_Qt_6_8_0_llvm_mingw_64_bit-Debug/XML-EDITOR_autogen/moc_predefs.h \
+D:/Senior\ 1\ CSE/DS/Project/CSE331-DSA-Project/XML-EDITOR/build/Desktop_Qt_6_8_0_llvm_mingw_64_bit-Debug/XML-EDITOR_autogen/EWIEGA46WW/moc_mainwindow.cpp: D:/Senior\ 1\ CSE/DS/Project/CSE331-DSA-Project/XML-EDITOR/mainwindow.h \
+  D:/Senior\ 1\ CSE/DS/Project/CSE331-DSA-Project/XML-EDITOR/build/Desktop_Qt_6_8_0_llvm_mingw_64_bit-Debug/XML-EDITOR_autogen/moc_predefs.h \
   D:/Qt/6.8.0/llvm-mingw_64/include/QtCore/q20functional.h \
   D:/Qt/6.8.0/llvm-mingw_64/include/QtCore/q20iterator.h \
   D:/Qt/6.8.0/llvm-mingw_64/include/QtCore/q20memory.h \

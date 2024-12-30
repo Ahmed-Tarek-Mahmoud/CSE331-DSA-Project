@@ -7,7 +7,15 @@
 #include "../external/graphAnalysis.h"
 #include "../external/graphParsing.hpp"
 #include "../external/socialGraph.h"
+#include "../external/Tree.h"
+#include "../external/treeparse.h"
+#include "../external/postGraph.h"
+#include "../external/Search.h"
+#include "../external/drawGraph/drawGraph.hpp"
 #include "set"
+#include "QProcess"
+#include "QDebug"
+#include "QPixmap"
 LevelTwo::LevelTwo(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::LevelTwo)
@@ -15,6 +23,15 @@ LevelTwo::LevelTwo(QWidget *parent)
     ui->setupUi(this);
     ui->suggest->setVisible(false);
     connect(ui->comboBox, &QComboBox::currentTextChanged, this, &LevelTwo::on_comboBox_currentTextChanged);
+    ui->tabWidget->setStyleSheet(
+        "QTabBar::tab:selected { "
+        "background: rgb(0, 85, 255); "
+        "color: black; "
+        "font-weight: bold;"
+        "}"
+        "QTabBar::tab::hover { "
+        "background: rgb(85, 170, 255) ; "
+        "}");
 }
 
 LevelTwo::~LevelTwo()
@@ -57,18 +74,15 @@ void LevelTwo::resetStyleSheet()
 
 void LevelTwo::on_tabWidget_tabBarClicked(int index)
 {
-<<<<<<< Updated upstream
-    if(index==2){
-=======
+
     resetStyleSheet();
+
     if(index==3){
->>>>>>> Stashed changes
 
         MainWindow *m = new MainWindow();
         m->show();
         this->close();
     }
-
 }
 
 
@@ -166,9 +180,6 @@ void LevelTwo::on_comboBox_currentTextChanged(const QString &arg1)
     }
 }
 
-<<<<<<< Updated upstream
-=======
-
 void LevelTwo::on_goSearchBtn_clicked()
 {
     resetStyleSheet();
@@ -183,6 +194,9 @@ void LevelTwo::on_goSearchBtn_clicked()
         "    color: white;"
         "} "
         );
+
+void LevelTwo::on_goSearchBtn_clicked()
+{
     if(ui->keyValue->text().isEmpty()){
         QMessageBox::warning(this, "Error", "Please Type a Search Key");
         return;
@@ -277,6 +291,7 @@ void LevelTwo::on_BrowseSearchBtn_clicked()
         "    color: white;"
         "} "
         );
+
     filePath = QFileDialog::getOpenFileName(this, "Open Text File", "", "All Files (*)");
 
     if (!filePath.isEmpty()) {
@@ -306,6 +321,7 @@ void LevelTwo::on_BrowseDrawBtn_clicked()
         "    color: white;"
         "} "
         );
+
     filePath = QFileDialog::getOpenFileName(this, "Open Text File", "", "All Files (*)");
 
     if (!filePath.isEmpty()) {
@@ -341,6 +357,7 @@ void LevelTwo::on_drawBtn_clicked()
         "    color: white;"
         "} "
         );
+
     if(!filePath.isEmpty()){
 
 
@@ -412,4 +429,4 @@ void LevelTwo::on_clearBtn_clicked()
     ui->imageLabel->setText("                      Image wil be displayed here                  ");
 }
 
->>>>>>> Stashed changes
+

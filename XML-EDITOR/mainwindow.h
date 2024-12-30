@@ -22,9 +22,7 @@ public:
 private slots:
     void on_pushButton_clicked();
 
-
     void on_validateBtn_clicked();
-
 
     void on_correctBtn_clicked();
 
@@ -44,12 +42,8 @@ private slots:
 
     void on_minifyBtn_clicked();
 
-    void on_toolButton_clicked();
-
     void on_tabWidget_tabBarClicked(int index);
 
-<<<<<<< Updated upstream
-=======
     void on_saveDecompressBtn_clicked();
 
     void on_decompressBtn_clicked();
@@ -60,15 +54,14 @@ private slots:
 
     void on_cmpBrowseBtn_clicked();
 
-     void resetButtonStyles();
-
->>>>>>> Stashed changes
 private:
     Ui::MainWindow *ui;
     QString saveFile;
     QString filePath;  // Qstring version of the path
     string fileStrPath; // string version of the path
     vector<string> corrected; // corrected output of validate function
+    string decompressedData;
+    string compressedData;
 
 };
 #endif // MAINWINDOW_H
