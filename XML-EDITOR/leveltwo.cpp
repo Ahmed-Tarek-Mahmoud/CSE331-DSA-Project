@@ -178,11 +178,10 @@ void LevelTwo::on_comboBox_currentTextChanged(const QString &arg1)
     } else {
         ui->suggest->setVisible(false);
     }
-}
+}   
 
 void LevelTwo::on_goSearchBtn_clicked()
-{
-    resetStyleSheet();
+{    resetStyleSheet();
     // Set the specific style for the clicked button
     ui->goSearchBtn->setStyleSheet(
         "QPushButton {"
@@ -194,9 +193,6 @@ void LevelTwo::on_goSearchBtn_clicked()
         "    color: white;"
         "} "
         );
-
-void LevelTwo::on_goSearchBtn_clicked()
-{
     if(ui->keyValue->text().isEmpty()){
         QMessageBox::warning(this, "Error", "Please Type a Search Key");
         return;

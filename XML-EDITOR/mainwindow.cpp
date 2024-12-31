@@ -493,12 +493,6 @@ void MainWindow::on_cmpBtn_clicked()
     ui->cmpBrowseBtn->setStyleSheet("");
     ui->cmpBtn->setStyleSheet("");
     ui->decompressBtn->setStyleSheet("");
-
-    if(index==4){
-        LevelTwo *l = new LevelTwo();
-        l->show();
-        this->close();
-=======
     if(!filePath.isEmpty()){
         string content = CompDec::read_file(filePath.toStdString());
         vector<int> data = CompDec::compress(content);

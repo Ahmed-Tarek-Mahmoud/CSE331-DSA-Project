@@ -20,6 +20,8 @@ public:
     ~MainWindow();
 
 private slots:
+    void resetButtonStyles();
+
     void on_pushButton_clicked();
 
     void on_validateBtn_clicked();

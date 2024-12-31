@@ -251,6 +251,9 @@ int main(int argc, char *argv[]) {
             }
             drawGraph(argv[3] , argv[5]);
             cout<<"Done."<<endl;
+        }else{
+            cout<<"Invalid Command."<<endl;
+            return 1;
         }
     return 0;
 }
